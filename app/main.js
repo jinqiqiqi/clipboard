@@ -1,7 +1,8 @@
 const {
     app,
     BrowserWindow,
-    ipcMain
+    ipcMain,
+    shell
 } = require('electron/main')
 
 const path = require('node:path')
@@ -29,8 +30,17 @@ const handleSetTitle = (event, title) => {
     win.setTitle(title);
 }
 
+const handleOpenExternal = (event, link) => {
+    // const webContents = event.sender
+    // const win = BrowserWindow.fromWebContents(webContents)
+    // win.setTitle(link);
+    shell.openExternal(link);
+}
+
 app.whenReady().then(() => {
-    ipcMain.on('set-title', handleSetTitle)
+    ipcMain.on('set-title', handleSetTitle);
+    ipcMain.on('open-external', handleOpenExternal);
+    
     createWindow();
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length == 0) {

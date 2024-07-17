@@ -50,7 +50,8 @@ clearStorageButton.addEventListener('click', () => {
 linksSection.addEventListener('click', (event) => {
     if (event.target.href) {
         event.preventDefault();
-        // shell.openExternal(event.target.href);
+        window.electronAPI.openExternal(event.target.href)
+        
     }
 })
 
@@ -69,7 +70,7 @@ const storeLink = (title, url) => {
         title: title,
         url: url
     }));
-    window.electronAPI.setTitle(`${title} added.`)
+    window.electronAPI.setTitle(`Bookmarker == ${title} added.`)
 }
 
 const getLinks = () => {
