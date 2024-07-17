@@ -1,16 +1,18 @@
 {
-  "name": "bookmarker",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./app/main.js",
-  "scripts": {
-    "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "electron": "^31.2.1"
-  }
+    "name": "bookmarker",
+    "version": "1.0.0",
+    "description": "",
+    "main": "./app/main.js",
+    "scripts": {
+        "start": "electron .",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {},
+    "devDependencies": {
+        "electron": "^31.2.1",
+        "electron-builder": "^24.13.3"
+    }
 }
