@@ -2,7 +2,7 @@ const {
     app,
     BrowserWindow,
     ipcMain
-} = require('electron')
+} = require('electron/main')
 
 const path = require('node:path')
 
