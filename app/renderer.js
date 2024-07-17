@@ -22,17 +22,24 @@ const clearForm = () => {
 
 newLinkForm.addEventListener('submit', (event) => {
     event.preventDefault();
+    newLinkSubmit.disable = true;
 
     const url = newLinkUrl.value;
-
-    fetch(url)
-        .then(response => response.text())
-        .then(parseResponse)
-        .then(findTitle)
-        .then(title => storeLink(title, url))
-        .then(clearForm)
-        .then(renderLinks)
-        .catch(error => handleError(error, url));
+    if (url) {
+        fetch(url)
+            .then(response => response.text())
+            .then(parseResponse)
+            .then(findTitle)
+            .then(title => storeLink(title, url))
+            .then(clearForm)
+            .then(renderLinks)
+            .catch(error => {
+                handleError(error, url)
+                newLinkSubmit.disable = false;
+            });
+    } else {
+        errorMessage.innerHTML = 'empty url'
+    }
 });
 
 clearStorageButton.addEventListener('click', () => {
@@ -49,6 +56,7 @@ linksSection.addEventListener('click', (event) => {
 
 
 const parseResponse = (text) => {
+    console.log(text)
     return parser.parseFromString(text, 'text/html');
 }
 
@@ -61,6 +69,7 @@ const storeLink = (title, url) => {
         title: title,
         url: url
     }));
+    window.electronAPI.setTitle(`${title} added.`)
 }
 
 const getLinks = () => {
@@ -68,12 +77,14 @@ const getLinks = () => {
 }
 
 const convertToElement = (link) => {
-    return `<div class="link"><h3>${link.title}</h3><p><a href="${link.url}" title="${link.title}">${link.url}</a></p></div>`
+    return `<li><a href="${link.url}" title="${link.title}">${link.url}</a> - (${link.title}) </li>`
 }
 
 const renderLinks = () => {
     const linkElements = getLinks().map(convertToElement).join('');
-    linksSection.innerHTML = linkElements;
+    linksSection.innerHTML = `<ul class="link">${linkElements}</ul>`;
+
+    newLinkSubmit.disable = false;
 }
 
 const handleError = (error, url) => {
