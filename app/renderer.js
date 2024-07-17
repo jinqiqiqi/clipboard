@@ -11,6 +11,9 @@ const newLinkUrl = document.querySelector('.new-link-url');
 const newLinkSubmit = document.querySelector('.new-link-submit');
 const clearStorageButton = document.querySelector('.clear-storage');
 
+const toggleDarkMode = document.querySelector('#toggle-dark-theme')
+const resetToSystem = document.querySelector('#reset-to-system')
+
 newLinkUrl.addEventListener('keyup', () => {
     newLinkSubmit.disabled = !newLinkUrl.validity.valid;
 })
@@ -110,3 +113,13 @@ const displayVersions = () => {
     errorMessage.innerHTML = `Versions:<hr />node: ${versions.node()}<br />chrome: ${versions.chrome()}<br />electron: ${versions.electron()}`
 }
 displayVersions();
+
+toggleDarkMode.addEventListener('click', async () => {
+    const isDarkMode = await window.darkMode.toggle();
+    errorMessage.innerHTML = isDarkMode? 'Dark': 'Light'
+})
+
+resetToSystem.addEventListener('click', async () => {
+    await window.darkMode.system();
+    errorMessage.innerHTML = 'System'
+})
