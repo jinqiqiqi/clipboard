@@ -4,7 +4,7 @@ const {
     BrowserWindow,
     ipcMain,
     shell,
-    Menu, nativeTheme
+    Menu, nativeTheme, Tray
 } = require('electron/main')
 
 const path = require('node:path')
@@ -12,6 +12,7 @@ const path = require('node:path')
 
 
 let mainWindow = null;
+let tray = null;
 
 const createWindow = () => {
     console.log('Application built from Electron is starting...')
@@ -50,12 +51,17 @@ const createWindow = () => {
         width: 800,
         height: 600,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
+            preload: path.join(__dirname, 'assets/javascript/preload.js'),
             sandbox: false
-        }
+        },
+        show: false
     });
 
-    mainWindow.loadFile(path.join(__dirname, 'index.html'))
+    mainWindow.loadFile(path.join(__dirname, 'index.html'));
+
+    mainWindow.once('ready-to-show', () => {
+        mainWindow.show();
+    })
 
     // const contents = mainWindow.webContents
 
@@ -89,12 +95,35 @@ const handleSystemTheme  = () => {
     nativeTheme.themeSource = 'system'
 }
 
+const getIcon = () => {
+    let systemIconImage = 'assets/images/clipboard.png';
+    console.log("nativeTheme.shouldUseDarkColors = ", nativeTheme.themeSource)
+    if (0 && !nativeTheme.themeSource ) {
+        systemIconImage = 'assets/images/clipboard-light.png';
+    }
+    return path.join(__dirname, systemIconImage) ;
+}
+
 app.whenReady().then(() => {
     ipcMain.on('set-title', handleSetTitle);
     ipcMain.on('open-external', handleOpenExternal);
     ipcMain.handle('dark-mode:toggle', handleToggleTheme)
-    ipcMain.handle('dark-mode:system', handleSystemTheme)
-    
+    ipcMain.handle('dark-mode:system', handleSystemTheme);
+
+    tray = new Tray(getIcon());
+
+    const trayMenu = Menu.buildFromTemplate([
+        {
+            label: 'Toggle Theme',
+            click: () => { handleToggleTheme() }
+        }
+    ]);
+
+    tray.setToolTip('Clipmaster');
+    tray.setTitle('Clipmaster');
+    tray.setContextMenu(trayMenu);
+    // tray.on('click', tray.popUpContextMenu);
+
     createWindow();
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length == 0) {
