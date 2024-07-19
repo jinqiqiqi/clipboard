@@ -117,7 +117,6 @@ const getIcon = () => {
     return nativeImage.createFromPath(path.join(__dirname, systemIconImage));
 }
 
-
 const toggleWindow = () => {
     console.log("toggleWindow invoked.")
         // new Notification({
@@ -134,7 +133,6 @@ const toggleWindow = () => {
         mainWindow.show();
         mainWindow.focus();
     }
-
 }
 
 app.whenReady().then(() => {
@@ -145,14 +143,10 @@ app.whenReady().then(() => {
 
     tray = new Tray(getIcon());
 
-    
-
     tray.setToolTip('Clipmaster');
     // tray.setTitle('Clipmaster');
-
     // tray.on('click', tray.popUpContextMenu);
     tray.on('click', toggleWindow);
-
 
     createWindow();
     app.on('activate', () => {
@@ -186,11 +180,8 @@ app.whenReady().then(() => {
     if(!newClippingShortcut) {
         console.log("Global new clipping shortcut failed to register")
     }
-
     updateMenu();
-
 });
-
 
 const updateMenu = () => {
     const trayMenu = Menu.buildFromTemplate([{
@@ -221,8 +212,6 @@ const addClipping = () => {
     if(isClippingImage) {
         clipping = clipboard.readImage();
         clipping = clipping.toDataURL();
-        console.log(" >> image from clipboard is not supported.")
-        return 
     }
     else {
         clipping = clipboard.readText();    
@@ -236,15 +225,26 @@ const addClipping = () => {
 }
 
 const createClippingMenuItem = (clipping, index) => {
-
-    
     console.log("createClippingMenuItem clipping = ", clipping);
-    const trimLength = 50
+    const trimLength = 50;
+    const isImageFromClipping = clipping.includes('data:image');
+    let img = nativeImage.createFromPath(path.join(__dirname, "assets/images/clipboard@2x.png"))
+
+    if(isImageFromClipping) {
+        img = nativeImage.createFromDataURL(clipping);
+    }
     return {
         label: clipping.length > trimLength ? `${index}. ` + clipping.slice(0, trimLength) + '...': `${index}. ` + clipping,
         click: () => {
-            clipboard.writeText(clipping);
+            console.log(">>> writeToClipboard() = ", clipping)
+            if(isImageFromClipping) {
+                clipboard.writeImage(img);
+            }
+            else {
+                clipboard.writeText(clipping);
+            }
         },
+        icon: img.resize({width: 32, height: 32}),
         accelerator: `CommandOrControl+${index}`
     }
 }
