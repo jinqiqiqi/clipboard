@@ -13,9 +13,20 @@ const {
 } = require('electron')
 
 const path = require('node:path')
-const clippings = [];
+let clippings = [];
 let mainWindow = null;
 let tray = null;
+
+if (typeof localStorage === "undefined" || localStorage === null) {
+    var LocalStorage = require('node-localstorage').LocalStorage;
+    localStorage = new LocalStorage('./scratch');
+}
+
+const prepareClippings = () => {
+    clippings = JSON.parse(localStorage.getItem('clippings')) || [];
+}
+
+prepareClippings();
 
 const createWindow = () => {
     console.log('Application built from Electron is starting...')
@@ -190,7 +201,7 @@ const updateMenu = () => {
             accelerator: 'CommandOrControl+Shift+C'
         }, 
         { type: 'separator' },
-        ...clippings.slice(0, 10).map(createClippingMenuItem),
+        ...clippings.slice(0, 20).map(createClippingMenuItem),
         { type: 'separator' },
         {
             role: 'quit',
@@ -207,6 +218,7 @@ const addClipping = () => {
     console.log(" ==> clipping: ", clipping)
     if (clippings.includes(clipping)) return;
     clippings.unshift(clipping)
+    localStorage.setItem('clippings', JSON.stringify(clippings));
     updateMenu();
     return clipping;
 }
