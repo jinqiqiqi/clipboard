@@ -22,6 +22,7 @@ if (typeof localStorage === "undefined" || localStorage === null) {
     localStorage = new LocalStorage('./scratch');
 }
 
+
 const prepareClippings = () => {
     clippings = JSON.parse(localStorage.getItem('clippings')) || [];
 }
@@ -174,7 +175,6 @@ app.whenReady().then(() => {
         () => {
             const clipping = addClipping();
             if (clipping) {
-
                 new Notification({
                     title: 'clipping added.',
                     body: clipping
@@ -214,7 +214,19 @@ const updateMenu = () => {
 }
 
 const addClipping = () => {
-    const clipping = clipboard.readText();
+    const clipboardFormats = clipboard.availableFormats()
+    const isClippingImage = clipboardFormats.some(item => item.includes('image'))
+    console.log(" ==> isClippingImage: ", isClippingImage)
+    let clipping = null;
+    if(isClippingImage) {
+        clipping = clipboard.readImage();
+        clipping = clipping.toDataURL();
+        console.log(" >> image from clipboard is not supported.")
+        return 
+    }
+    else {
+        clipping = clipboard.readText();    
+    }
     console.log(" ==> clipping: ", clipping)
     if (clippings.includes(clipping)) return;
     clippings.unshift(clipping)
@@ -224,6 +236,9 @@ const addClipping = () => {
 }
 
 const createClippingMenuItem = (clipping, index) => {
+
+    
+    console.log("createClippingMenuItem clipping = ", clipping);
     const trimLength = 50
     return {
         label: clipping.length > trimLength ? clipping.slice(0, trimLength) + '...': clipping,
