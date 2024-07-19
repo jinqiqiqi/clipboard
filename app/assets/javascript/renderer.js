@@ -20,7 +20,7 @@ newLinkUrl.addEventListener('keyup', () => {
 
 
 const clearForm = () => {
-    newLinkUrl.value = null;
+    newLinkUrl.value = 'https://';
 }
 
 newLinkForm.addEventListener('submit', (event) => {
@@ -54,7 +54,6 @@ linksSection.addEventListener('click', (event) => {
     if (event.target.href) {
         event.preventDefault();
         window.electronAPI.openExternal(event.target.href)
-        
     }
 })
 
@@ -112,14 +111,15 @@ renderLinks();
 const displayVersions = () => {
     errorMessage.innerHTML = `Versions:<hr />node: ${versions.node()}<br />chrome: ${versions.chrome()}<br />electron: ${versions.electron()}`
 }
-displayVersions();
 
-toggleDarkMode.addEventListener('click', async () => {
+// displayVersions();
+
+toggleDarkMode.addEventListener('click', async() => {
     const isDarkMode = await window.darkMode.toggle();
-    errorMessage.innerHTML = isDarkMode? 'Dark': 'Light'
+    errorMessage.innerHTML = isDarkMode ? 'Dark' : 'Light'
 })
 
-resetToSystem.addEventListener('click', async () => {
+resetToSystem.addEventListener('click', async() => {
     await window.darkMode.system();
     errorMessage.innerHTML = 'System'
 })

@@ -111,8 +111,8 @@ const getIcon = () => {
 }
 
 
-const showMainWindow = () => {
-    console.log("show mainWindow.")
+const toggleWindow = () => {
+    console.log("toggleWindow invoked.")
         // new Notification({
         //     title: 'title here',
         //     body: 'notification body here.'
@@ -120,8 +120,14 @@ const showMainWindow = () => {
     if (BrowserWindow.getAllWindows().length == 0) {
         createWindow();
     }
-    mainWindow.show();
-    mainWindow.focus();
+
+    if (mainWindow.isVisible()) {
+        mainWindow.hide();
+    } else {
+        mainWindow.show();
+        mainWindow.focus();
+    }
+
 }
 
 app.whenReady().then(() => {
@@ -133,34 +139,35 @@ app.whenReady().then(() => {
     tray = new Tray(getIcon());
 
     const trayMenu = Menu.buildFromTemplate([{
-        label: 'Toggle Theme',
-        click: () => {
-            handleToggleTheme()
+            label: 'Toggle Theme',
+            click: () => {
+                handleToggleTheme()
+            }
+        }, {
+            label: 'Item1',
+            type: 'radio'
+        }, {
+            label: 'Item2',
+            type: 'radio',
+            checked: true
+        }, {
+            label: 'Item3',
+            type: 'radio'
+        },
+        {
+            role: 'quit',
+            accelerator: process.platform === 'darwin' ? 'Cmd+Q' : 'Control+Q',
+            click: () => handleSystemTheme(),
+            label: 'Quit'
         }
-    }, {
-        label: 'Item1',
-        type: 'radio'
-    }, {
-        label: 'Item2',
-        type: 'radio',
-        checked: true
-    }, {
-        label: 'Item3',
-        type: 'radio'
-    },
-    {
-        role: 'quit',
-        accelerator: process.platform === 'darwin' ? 'Cmd+Q' : 'Control+Q',
-        click: () => handleSystemTheme(),
-        label: 'Quit'
-    }]);
+    ]);
 
     tray.setToolTip('Clipmaster');
     tray.setTitle('Clipmaster');
     tray.setContextMenu(trayMenu);
 
     // tray.on('click', tray.popUpContextMenu);
-    tray.on('click', showMainWindow);
+    tray.on('click', toggleWindow);
 
 
     createWindow();
