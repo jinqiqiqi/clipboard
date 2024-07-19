@@ -63,14 +63,14 @@ const createWindow = () => {
             sandbox: false
         },
 		icon: path.join(__dirname, 'assets/images/clipboard.png'),
-        // show: false,
+        show: false,
         // titleBarStyle: 'customButtonsOnHover'
     });
 
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
     mainWindow.once('ready-to-show', () => {
-        mainWindow.show();
+        // mainWindow.show();
     })
 
     mainWindow.on('blur', () => {
@@ -127,12 +127,12 @@ const toggleWindow = () => {
         createWindow();
     }
 
-    if (mainWindow.isVisible()) {
-        mainWindow.hide();
-    } else {
-        mainWindow.show();
-        mainWindow.focus();
-    }
+    // if (mainWindow.isVisible()) {
+    //     mainWindow.hide();
+    // } else {
+    //     mainWindow.show();
+    //     mainWindow.focus();
+    // }
 }
 
 app.whenReady().then(() => {
@@ -164,34 +164,41 @@ app.whenReady().then(() => {
         console.log("Global activation shortcut failed to register")
     }
 
+const newClippingToApp = () => {
+    const clipping = addClipping();
+
+    if (clipping) {
+
+        const isImageFromClipping = clipping.includes('data:image');
+        const notificationObj = {}
+
+        notificationObj.img = nativeImage.createFromPath(path.join(__dirname, "assets/images/clipboard@2x.png")).resize({width: 64, height: 64})
+        notificationObj.contentText = clipping
+        notificationObj.title = "Text added."
+
+        if(isImageFromClipping) {
+            notificationObj.img = nativeImage.createFromDataURL(clipping);
+            notificationObj.contentText = ``
+            notificationObj.title = "Image added."
+        }
+        
+        new Notification({
+            title: notificationObj.title,
+            body: notificationObj.contentText,
+            icon: notificationObj.img
+        }).show();
+    }
+}
+
     const newClippingShortcut = globalShortcut.register(
         'CommandOrControl+Shift+C',
-        () => {
-            const clipping = addClipping();
+        newClippingToApp
+    );
 
-            if (clipping) {
-
-                const isImageFromClipping = clipping.includes('data:image');
-                const notificationObj = {}
-
-                notificationObj.img = nativeImage.createFromPath(path.join(__dirname, "assets/images/clipboard@2x.png")).resize({width: 64, height: 64})
-                notificationObj.contentText = clipping
-                notificationObj.title = "Text added."
-
-                if(isImageFromClipping) {
-                    notificationObj.img = nativeImage.createFromDataURL(clipping);
-                    notificationObj.contentText = ``
-                    notificationObj.title = "Image added."
-                }
-                
-                new Notification({
-                    title: notificationObj.title,
-                    body: notificationObj.contentText,
-                    icon: notificationObj.img
-                }).show();
-            }
-        }
-    )
+    setInterval(() => {
+        console.log(" === setInterval for newClippingToApp()...")
+        newClippingToApp()
+    }, 1000);
 
     if(!newClippingShortcut) {
         console.log("Global new clipping shortcut failed to register")
@@ -233,7 +240,7 @@ const addClipping = () => {
         clipping = clipboard.readText();    
     }
     console.log(" ==> clipping: ", clipping)
-    if (clippings.includes(clipping)) return "";
+    if (clippings.includes(clipping)) return;
     clippings.unshift(clipping)
     localStorage.setItem('clippings', JSON.stringify(clippings));
     updateMenu();
