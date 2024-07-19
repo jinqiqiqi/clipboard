@@ -17,39 +17,32 @@ let tray = null;
 const createWindow = () => {
     console.log('Application built from Electron is starting...')
 
+    // await window.darkMode.toggle()
+    // await window.darkMode.system();
     const menu = Menu.buildFromTemplate([
         {
-            label: `Bookmarker`,
+            label: `Theme Mode`,
             submenu: [
                 {
-                    click: () => mainWindow.webContents.send('update-counter', 1),
-                    label: 'Increment'
+                    role: 'help',
+                    accelerator: process.platform === 'darwin'? 'Alt+Cmd+M': 'Alt+Shift+M',
+                    click: () => handleToggleTheme(),
+                    label: 'Dark/Light Mode'
                 },
                 {
-                    click: () => mainWindow.webContents.send('update-counter', -1),
-                    label: 'Decrement'
-                }
-            ]
-        },
-        {
-            label: `Bookmarker`,
-            submenu: [
-                {
-                    click: () => mainWindow.webContents.send('update-counter', 1),
-                    label: 'Increment'
-                },
-                {
-                    click: () => mainWindow.webContents.send('update-counter', -1),
-                    label: 'Decrement'
+                    role: 'help',
+                    accelerator: process.platform === 'darwin'? 'Alt+Cmd+S': 'Alt+Shift+S',
+                    click: () => handleSystemTheme(),
+                    label: 'System Mode'
                 }
             ]
         }
     ])
 
-    // Menu.setApplicationMenu(menu)
+    Menu.setApplicationMenu(menu)
     mainWindow = new BrowserWindow({
         width: 800,
-        height: 600,
+        height: 1000,
         webPreferences: {
             preload: path.join(__dirname, 'assets/javascript/preload.js'),
             sandbox: false
@@ -66,6 +59,7 @@ const createWindow = () => {
     // const contents = mainWindow.webContents
 
     // console.log(contents)
+    // mainWindow.webContents.openDevTools()
 }
 
 const handleSetTitle = (event, title) => {
