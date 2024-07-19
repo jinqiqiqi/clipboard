@@ -7,21 +7,18 @@ const {
     nativeTheme,
     Tray,
     nativeImage,
-    Notification
+    Notification,
+    globalShortcut,
+    clipboard
 } = require('electron')
 
 const path = require('node:path')
-
-
-
+const clippings = [];
 let mainWindow = null;
 let tray = null;
 
 const createWindow = () => {
     console.log('Application built from Electron is starting...')
-
-    // await window.darkMode.toggle()
-    // await window.darkMode.system();
     const menu = Menu.buildFromTemplate([{
         label: `Theme Mode`,
         submenu: [{
@@ -45,7 +42,7 @@ const createWindow = () => {
         ]
     }])
 
-    Menu.setApplicationMenu(menu)
+    // Menu.setApplicationMenu(menu)
     mainWindow = new BrowserWindow({
         width: 860,
         height: 900,
@@ -70,9 +67,6 @@ const createWindow = () => {
         }
     })
 
-    // const contents = mainWindow.webContents
-
-    // console.log(contents)
     // mainWindow.webContents.openDevTools()
 }
 
@@ -139,33 +133,10 @@ app.whenReady().then(() => {
 
     tray = new Tray(getIcon());
 
-    const trayMenu = Menu.buildFromTemplate([{
-            label: 'Toggle Theme',
-            click: () => {
-                handleToggleTheme()
-            }
-        }, {
-            label: 'Item1',
-            type: 'radio'
-        }, {
-            label: 'Item2',
-            type: 'radio',
-            checked: true
-        }, {
-            label: 'Item3',
-            type: 'radio'
-        },
-        {
-            role: 'quit',
-            accelerator: process.platform === 'darwin' ? 'Cmd+Q' : 'Control+Q',
-            click: () => handleSystemTheme(),
-            label: 'Quit'
-        }
-    ]);
+    
 
     tray.setToolTip('Clipmaster');
-    tray.setTitle('Clipmaster');
-    tray.setContextMenu(trayMenu);
+    // tray.setTitle('Clipmaster');
 
     // tray.on('click', tray.popUpContextMenu);
     tray.on('click', toggleWindow);
@@ -173,15 +144,83 @@ app.whenReady().then(() => {
 
     createWindow();
     app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length == 0) {
-            createWindow();
-        }
+        toggleWindow()
     })
 
+    const activationShortcut = globalShortcut.register(
+        'CommandOrControl+Option+C',
+        () => {
+            tray.popUpContextMenu();
+        }
+    )
 
+    if(!activationShortcut) {
+        console.log("Global activation shortcut failed to register")
+    }
+
+    const newClippingShortcut = globalShortcut.register(
+        'CommandOrControl+Shift+C',
+        () => {
+            const clipping = addClipping();
+            if (clipping) {
+
+                new Notification({
+                    title: 'clipping added.',
+                    body: clipping
+                }).show();
+            }
+        }
+    )
+
+    if(!newClippingShortcut) {
+        console.log("Global new clipping shortcut failed to register")
+    }
+
+    updateMenu();
 
 });
 
+
+const updateMenu = () => {
+    const trayMenu = Menu.buildFromTemplate([{
+            label: 'Create New Clipping',
+            click: () => {
+                addClipping()
+            },
+            accelerator: 'CommandOrControl+Shift+C'
+        }, 
+        { type: 'separator' },
+        ...clippings.slice(0, 10).map(createClippingMenuItem),
+        { type: 'separator' },
+        {
+            role: 'quit',
+            accelerator: process.platform === 'darwin' ? 'Cmd+Q' : 'Control+Q',
+            click: () => handleSystemTheme(),
+            label: 'Quit'
+        }
+    ]);
+    tray.setContextMenu(trayMenu);
+}
+
+const addClipping = () => {
+    const clipping = clipboard.readText();
+    console.log(" ==> clipping: ", clipping)
+    if (clippings.includes(clipping)) return;
+    clippings.unshift(clipping)
+    updateMenu();
+    return clipping;
+}
+
+const createClippingMenuItem = (clipping, index) => {
+    const trimLength = 50
+    return {
+        label: clipping.length > trimLength ? clipping.slice(0, trimLength) + '...': clipping,
+        click: () => {
+            clipboard.writeText(clipping);
+        },
+        accelerator: `CommandOrControl+${index}`
+    }
+}
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
