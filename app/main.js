@@ -241,7 +241,7 @@ const createClippingMenuItem = (clipping, index) => {
     console.log("createClippingMenuItem clipping = ", clipping);
     const trimLength = 50
     return {
-        label: clipping.length > trimLength ? clipping.slice(0, trimLength) + '...': clipping,
+        label: clipping.length > trimLength ? `${index}. ` + clipping.slice(0, trimLength) + '...': `${index}. ` + clipping,
         click: () => {
             clipboard.writeText(clipping);
         },
