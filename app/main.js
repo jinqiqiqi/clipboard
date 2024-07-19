@@ -168,10 +168,26 @@ app.whenReady().then(() => {
         'CommandOrControl+Shift+C',
         () => {
             const clipping = addClipping();
+
             if (clipping) {
+
+                const isImageFromClipping = clipping.includes('data:image');
+                const notificationObj = {}
+
+                notificationObj.img = nativeImage.createFromPath(path.join(__dirname, "assets/images/clipboard@2x.png")).resize({width: 64, height: 64})
+                notificationObj.contentText = clipping
+                notificationObj.title = "Text added."
+
+                if(isImageFromClipping) {
+                    notificationObj.img = nativeImage.createFromDataURL(clipping);
+                    notificationObj.contentText = ``
+                    notificationObj.title = "Image added."
+                }
+                
                 new Notification({
-                    title: 'clipping added.',
-                    body: clipping
+                    title: notificationObj.title,
+                    body: notificationObj.contentText,
+                    icon: notificationObj.img
                 }).show();
             }
         }
@@ -217,7 +233,7 @@ const addClipping = () => {
         clipping = clipboard.readText();    
     }
     console.log(" ==> clipping: ", clipping)
-    if (clippings.includes(clipping)) return;
+    if (clippings.includes(clipping)) return "";
     clippings.unshift(clipping)
     localStorage.setItem('clippings', JSON.stringify(clippings));
     updateMenu();
