@@ -53,8 +53,8 @@ const createWindow = () => {
             preload: path.join(__dirname, 'assets/javascript/preload.js'),
             sandbox: false
         },
-        show: false,
-        titleBarStyle: 'customButtonsOnHover'
+        // show: false,
+        // titleBarStyle: 'customButtonsOnHover'
     });
 
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
@@ -102,21 +102,24 @@ const handleSystemTheme = () => {
 }
 
 const getIcon = () => {
-    let systemIconImage = 'assets/images/clipboard.png';
+    let systemIconImage = 'assets/images/clipboard@2x.png';
     console.log("nativeTheme.shouldUseDarkColors = ", nativeTheme.themeSource)
     if (0 && !nativeTheme.themeSource) {
-        systemIconImage = 'assets/images/clipboard-light.png';
+        systemIconImage = 'assets/images/clipboard-light@2x.png';
     }
     return nativeImage.createFromPath(path.join(__dirname, systemIconImage));
 }
 
 
-const showNotification = () => {
+const showMainWindow = () => {
     console.log("show mainWindow.")
         // new Notification({
         //     title: 'title here',
         //     body: 'notification body here.'
         // }).show();
+    if (BrowserWindow.getAllWindows().length == 0) {
+        createWindow();
+    }
     mainWindow.show();
     mainWindow.focus();
 }
@@ -144,6 +147,12 @@ app.whenReady().then(() => {
     }, {
         label: 'Item3',
         type: 'radio'
+    },
+    {
+        role: 'quit',
+        accelerator: process.platform === 'darwin' ? 'Cmd+Q' : 'Control+Q',
+        click: () => handleSystemTheme(),
+        label: 'Quit'
     }]);
 
     tray.setToolTip('Clipmaster');
@@ -151,7 +160,7 @@ app.whenReady().then(() => {
     tray.setContextMenu(trayMenu);
 
     // tray.on('click', tray.popUpContextMenu);
-    tray.on('click', showNotification);
+    tray.on('click', showMainWindow);
 
 
     createWindow();
