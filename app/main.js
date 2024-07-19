@@ -53,6 +53,7 @@ const createWindow = () => {
             preload: path.join(__dirname, 'assets/javascript/preload.js'),
             sandbox: false
         },
+		icon: path.join(__dirname, 'assets/images/clipboard.png'),
         // show: false,
         // titleBarStyle: 'customButtonsOnHover'
     });
