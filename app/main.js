@@ -4,8 +4,9 @@ const {
     BrowserWindow,
     ipcMain,
     shell,
-    Menu, nativeTheme, Tray
-} = require('electron/main')
+    Menu, nativeTheme, Tray,
+    nativeImage
+} = require('electron')
 
 const path = require('node:path')
 
@@ -34,6 +35,12 @@ const createWindow = () => {
                     accelerator: process.platform === 'darwin'? 'Alt+Cmd+S': 'Alt+Shift+S',
                     click: () => handleSystemTheme(),
                     label: 'System Mode'
+                },
+                {
+                    role: 'quit',
+                    accelerator: process.platform === 'darwin'? 'Cmd+Q': 'Control+Q',
+                    click: () => handleSystemTheme(),
+                    label: 'Quit'
                 }
             ]
         }
@@ -41,8 +48,8 @@ const createWindow = () => {
 
     Menu.setApplicationMenu(menu)
     mainWindow = new BrowserWindow({
-        width: 800,
-        height: 1000,
+        width: 860,
+        height: 900,
         webPreferences: {
             preload: path.join(__dirname, 'assets/javascript/preload.js'),
             sandbox: false
@@ -95,7 +102,7 @@ const getIcon = () => {
     if (0 && !nativeTheme.themeSource ) {
         systemIconImage = 'assets/images/clipboard-light.png';
     }
-    return path.join(__dirname, systemIconImage) ;
+    return nativeImage.createFromPath(path.join(__dirname, systemIconImage));
 }
 
 app.whenReady().then(() => {
@@ -115,7 +122,8 @@ app.whenReady().then(() => {
 
     tray.setToolTip('Clipmaster');
     tray.setTitle('Clipmaster');
-    tray.setContextMenu(trayMenu);
+    // tray.setContextMenu(trayMenu);
+
     // tray.on('click', tray.popUpContextMenu);
 
     createWindow();
