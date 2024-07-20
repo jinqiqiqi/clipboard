@@ -3,38 +3,27 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Bookmarker</title>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src *" />
+    <title>Clipboard</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src *; img-src 'self' data:" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" href="./assets/styles/style.css" type="text/css" />
 </head>
 
 <body>
-    <h1>URL Bookmarker List</h1>
+    <h1>Clipboard</h1>
 
-    <section class="add-new-link">
-        <form action="" class="new-link-form">
-            <input type="url" class="new-link-url" placeholder="https://" value="https://" size="70" />
-            <input type="submit" class="new-link-submit" value="Submit" disabled>
-        </form>
+    <section class="ctl-create-new-clipping">
+        <button class="create-new-clipping">Create New Clipping</button>
     </section>
 
-    <section class="links"></section>
+    <section class="clipboard-content-list"></section>
 
-    <section class="controls">
+    <section class="ctl-clear-storage">
         <button class="clear-storage">Clear Storage</button>
     </section>
 
-    <section>
-        <button id="toggle-dark-theme">
-			Toggle Dark Mode
-		</button>
-        <button id="reset-to-system">
-			Reset to System Theme
-		</button>
-    </section>
-
     <div class="error-message"></div>
+
     <script src="./assets/javascript/renderer.js"></script>
 
 </body>

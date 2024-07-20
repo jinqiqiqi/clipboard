@@ -11,6 +11,9 @@ importers:
       node-localstorage:
         specifier: ^3.0.5
         version: 3.0.5
+      node-persist:
+        specifier: ^4.0.2
+        version: 4.0.2
     devDependencies:
       electron:
         specifier: ^31.2.1
@@ -744,6 +747,10 @@ packages:
   node-localstorage@3.0.5:
     resolution: {integrity: sha512-GCwtK33iwVXboZWYcqQHu3aRvXEBwmPkAMRBLeaX86ufhqslyUkLGsi4aW3INEfdQYpUB5M9qtYf3eHvAk2VBg==}
     engines: {node: '>=0.12'}
+
+  node-persist@4.0.2:
+    resolution: {integrity: sha512-J/xDWS6Tn7kNn3ErAvz2kOVul94s7IKhIQLX24mw2eViLqTCfuIOywBT5kSrOy7vF2HfCWGJtSx7z6OiFXmnzQ==}
+    engines: {node: '>=10.12.0'}
 
   normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
@@ -1931,6 +1938,8 @@ snapshots:
   node-localstorage@3.0.5:
     dependencies:
       write-file-atomic: 5.0.1
+
+  node-persist@4.0.2: {}
 
   normalize-path@3.0.0: {}
 
