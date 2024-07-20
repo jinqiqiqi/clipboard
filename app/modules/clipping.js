@@ -1,6 +1,7 @@
 const { clipboard } = require("electron")
 const { updateTrayMenu } = require("./tray")
 const clippings = []
+const path = require('node:path')
 
 const addClipping = () => {
     const clipboardFormats = clipboard.availableFormats()
@@ -22,7 +23,6 @@ const addClipping = () => {
     return clipping;
 }
 
-
 const newClippingToApp = async () => {
     const clipping = addClipping();
     const notificationObj = {}
@@ -31,7 +31,7 @@ const newClippingToApp = async () => {
 
         const isImageFromClipping = clipping.includes('data:image');
 
-        notificationObj.img = nativeImage.createFromPath(relativeFilePath("assets/images/clipboard@2x.png")).resize({width: 64, height: 64})
+        notificationObj.img = nativeImage.createFromPath(path.join(__dirname, "../assets/images/clipboard@2x.png")).resize({width: 64, height: 64})
         notificationObj.contentText = clipping
         notificationObj.title = "Text added."
 

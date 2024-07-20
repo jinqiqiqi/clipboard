@@ -1,6 +1,5 @@
 const { BrowserWindow, Menu, globalShortcut } = require('electron')
 const path = require('node:path')
-const { mainWindow, tray } = require('./main')
 const { clipboardMenu } = require('./modules/menu')
 const { newClippingToApp } = require('./modules/clipping')
 
