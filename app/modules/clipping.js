@@ -1,6 +1,5 @@
 const { clipboard, nativeImage, Notification } = require("electron")
 const { updateTrayMenu } = require("./tray")
-const clippings = []
 const path = require('node:path')
 
 const addClipping = (tray, clippings) => {

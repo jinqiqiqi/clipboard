@@ -2,48 +2,41 @@ const {
     app,
     BrowserWindow,
     ipcMain,
-    shell,
-    Menu,
-    nativeTheme,
     Tray,
-    nativeImage,
-    Notification,
     globalShortcut,
-    clipboard
 } = require('electron')
 
 const path = require('node:path')
 
 const { createWindow } = require('./common')
 const { clipboardTray, getTrayIcon, updateTrayMenu } = require('./modules/tray')
-const { clipboardMenu } = require('./modules/menu')
 const { selectRequiredClipping, newClippingToApp } = require('./modules/clipping')
 
 let clippings = [];
 let mainWindow = null;
 let tray = null;
 
-
-
 const displayWindow = () => {
     console.log("toggleWindow invoked.");
     if (BrowserWindow.getAllWindows().length == 0) {
-        createWindow();
+        mainWindow = createWindow();
     }
 
     if (0 && mainWindow.isVisible()) {
         mainWindow.hide();
     } else {
-        // mainWindow.show();
-        // mainWindow.focus();
+        mainWindow.show();
+        mainWindow.focus();
     }
 }
 
 
 app.whenReady().then(() => {
-    ipcMain.handle('clipping:create-new', newClippingToApp);
+    ipcMain.handle('clipping:create-new', () => {
+        newClippingToApp(tray, clippings)
+    });
     ipcMain.handle('clipping:select-required', selectRequiredClipping);
-    createWindow();
+    mainWindow = createWindow();
 
     tray = new Tray(getTrayIcon());
 
@@ -51,7 +44,6 @@ app.whenReady().then(() => {
     // tray.setTitle('Clipmaster');
     // tray.on('click', tray.popUpContextMenu);
     tray.on('click', displayWindow);
-
     
     app.on('activate', () => {
         displayWindow()
@@ -61,7 +53,7 @@ app.whenReady().then(() => {
 
     // setInterval(() => {
     //     console.log(" === setInterval for newClippingToApp()...")
-    //     newClippingToApp()
+    //     newClippingToApp(tray, clippings)
     // }, 1000);
 
     updateTrayMenu(tray, clippings);

@@ -1,8 +1,6 @@
 const { Menu, nativeTheme, nativeImage } = require("electron");
 const path = require('node:path')
 
-// clippings, addClipping(), createClippingMenuItem
-
 const updateTrayMenu = (tray, clippings) => {
     console.log(" > clippings = ", clippings)
     const trayMenu = Menu.buildFromTemplate([{
