@@ -1,9 +1,9 @@
-const { clipboard } = require("electron")
+const { clipboard, nativeImage, Notification } = require("electron")
 const { updateTrayMenu } = require("./tray")
 const clippings = []
 const path = require('node:path')
 
-const addClipping = () => {
+const addClipping = (tray, clippings) => {
     const clipboardFormats = clipboard.availableFormats()
     const isClippingImage = clipboardFormats.some(item => item.includes('image'))
     console.log(" ==> isClippingImage: ", isClippingImage)
@@ -19,12 +19,12 @@ const addClipping = () => {
     if (clippings.includes(clipping)) return;
     clippings.unshift(clipping)
     
-    updateTrayMenu();
+    updateTrayMenu(tray, clippings);
     return clipping;
 }
 
-const newClippingToApp = async () => {
-    const clipping = addClipping();
+const newClippingToApp = async (tray, clippings) => {
+    const clipping = addClipping(tray, clippings);
     const notificationObj = {}
 
     if (clipping) {

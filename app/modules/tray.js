@@ -4,10 +4,11 @@ const path = require('node:path')
 // clippings, addClipping(), createClippingMenuItem
 
 const updateTrayMenu = (tray, clippings) => {
+    console.log(" > clippings = ", clippings)
     const trayMenu = Menu.buildFromTemplate([{
             label: 'Create New Clipping',
             click: () => {
-                addClipping()
+                addClipping(tray, clippings)
             },
             accelerator: 'CommandOrControl+Shift+C'
         }, 

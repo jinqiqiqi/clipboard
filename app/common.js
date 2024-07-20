@@ -8,19 +8,6 @@ const relativeFilePath = (fileName) => {
     return path.join(__dirname, fileName)
 }
 
-const displayWindow = () => {
-    console.log("toggleWindow invoked.");
-    if (BrowserWindow.getAllWindows().length == 0) {
-        createWindow();
-    }
-
-    if (0 && mainWindow.isVisible()) {
-        mainWindow.hide();
-    } else {
-        mainWindow.show();
-        mainWindow.focus();
-    }
-}
 
 const createWindow = () => {
     console.log('Application built from Electron is starting...')
@@ -55,33 +42,8 @@ const createWindow = () => {
 }
 
 
-const registerGlobalShortcuts = () => {
-    const activationShortcut = globalShortcut.register(
-        'CommandOrControl+Option+C',
-        () => {
-            tray.popUpContextMenu();
-        }
-    )
-
-    if(!activationShortcut) {
-        console.log("Global activation shortcut failed to register")
-    }
-
-
-
-    const newClippingShortcut = globalShortcut.register(
-        'CommandOrControl+Shift+C',
-        newClippingToApp
-    );
-
-    if(!newClippingShortcut) {
-        console.log("Global new clipping shortcut failed to register")
-    }
-}
 
 module.exports = {
     relativeFilePath,
-    displayWindow,
-    createWindow, 
-    registerGlobalShortcuts
+    createWindow
 }

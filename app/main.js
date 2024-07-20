@@ -14,7 +14,7 @@ const {
 
 const path = require('node:path')
 
-const { createWindow, registerGlobalShortcuts } = require('./common')
+const { createWindow } = require('./common')
 const { clipboardTray, getTrayIcon, updateTrayMenu } = require('./modules/tray')
 const { clipboardMenu } = require('./modules/menu')
 const { selectRequiredClipping, newClippingToApp } = require('./modules/clipping')
@@ -57,7 +57,7 @@ app.whenReady().then(() => {
         displayWindow()
     })
 
-    registerGlobalShortcuts()
+    registerGlobalShortcuts(clippings)
 
     // setInterval(() => {
     //     console.log(" === setInterval for newClippingToApp()...")
@@ -66,6 +66,33 @@ app.whenReady().then(() => {
 
     updateTrayMenu(tray, clippings);
 });
+
+
+const registerGlobalShortcuts = (clippings) => {
+    const activationShortcut = globalShortcut.register(
+        'CommandOrControl+Option+C',
+        () => {
+            tray.popUpContextMenu();
+        }
+    )
+
+    if(!activationShortcut) {
+        console.log("Global activation shortcut failed to register")
+    }
+
+
+
+    const newClippingShortcut = globalShortcut.register(
+        'CommandOrControl+Shift+C',
+        () => {
+            newClippingToApp(tray, clippings)
+        }
+    );
+
+    if(!newClippingShortcut) {
+        console.log("Global new clipping shortcut failed to register")
+    }
+}
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
