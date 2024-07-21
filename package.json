@@ -4,8 +4,11 @@
     "description": "",
     "main": "./app/main.js",
     "scripts": {
-        "start": "electron .",
+        "dev": "electron . --trace-warnings",
         "build": "electron-builder",
+        "build:win": "electron-builder --windows",
+        "build:linux": "electron-builder --linux AppImage",
+        "build:macos": "electron-builder --macos",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
