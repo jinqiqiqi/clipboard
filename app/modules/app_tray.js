@@ -37,7 +37,7 @@ class AppTray {
 
     createOrUpdateTrayMenu() {
         const trayMenu = Menu.buildFromTemplate([{
-            label: 'Show',
+            label: 'Show Clipboard',
             click: () => {
                 this.displayClipboardWindow();
             }
