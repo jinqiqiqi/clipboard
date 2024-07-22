@@ -7,13 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      node-localstorage:
-        specifier: ^3.0.5
-        version: 3.0.5
-      node-persist:
-        specifier: ^4.0.2
-        version: 4.0.2
     devDependencies:
       electron:
         specifier: ^31.2.1
@@ -574,10 +567,6 @@ packages:
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
 
-  imurmurhash@0.1.4:
-    resolution: {integrity: sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA==}
-    engines: {node: '>=0.8.19'}
-
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
     deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
@@ -743,14 +732,6 @@ packages:
 
   node-addon-api@1.7.2:
     resolution: {integrity: sha512-ibPK3iA+vaY1eEjESkQkM0BbCqFOaZMiXRTtdB0u7b4djtY6JnsjvPdUHVMg6xQt3B8fpTTWHI9A+ADjM9frzg==}
-
-  node-localstorage@3.0.5:
-    resolution: {integrity: sha512-GCwtK33iwVXboZWYcqQHu3aRvXEBwmPkAMRBLeaX86ufhqslyUkLGsi4aW3INEfdQYpUB5M9qtYf3eHvAk2VBg==}
-    engines: {node: '>=0.12'}
-
-  node-persist@4.0.2:
-    resolution: {integrity: sha512-J/xDWS6Tn7kNn3ErAvz2kOVul94s7IKhIQLX24mw2eViLqTCfuIOywBT5kSrOy7vF2HfCWGJtSx7z6OiFXmnzQ==}
-    engines: {node: '>=10.12.0'}
 
   normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
@@ -1015,10 +996,6 @@ packages:
 
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
-
-  write-file-atomic@5.0.1:
-    resolution: {integrity: sha512-+QU2zd6OTD8XWIJCbffaiQeH9U73qIqafo1x6V1snCWYGJf6cVE0cDR4D8xRzcEnfI21IFrUPzPGtcPf8AC+Rw==}
-    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
   xmlbuilder@15.1.1:
     resolution: {integrity: sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg==}
@@ -1795,8 +1772,6 @@ snapshots:
 
   ieee754@1.2.1: {}
 
-  imurmurhash@0.1.4: {}
-
   inflight@1.0.6:
     dependencies:
       once: 1.4.0
@@ -1934,12 +1909,6 @@ snapshots:
 
   node-addon-api@1.7.2:
     optional: true
-
-  node-localstorage@3.0.5:
-    dependencies:
-      write-file-atomic: 5.0.1
-
-  node-persist@4.0.2: {}
 
   normalize-path@3.0.0: {}
 
@@ -2211,11 +2180,6 @@ snapshots:
       strip-ansi: 7.1.0
 
   wrappy@1.0.2: {}
-
-  write-file-atomic@5.0.1:
-    dependencies:
-      imurmurhash: 0.1.4
-      signal-exit: 4.1.0
 
   xmlbuilder@15.1.1: {}
 
