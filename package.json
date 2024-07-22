@@ -18,16 +18,16 @@
 			"output": "dist"
 		},
 		"win": {
-			"icon": "assets/images/clipboard.png"
+			"icon": "app/assets/images/clipboard.png"
 		},
 		"linux": {
-			"icon": "assets/images/clipboard.png",
+			"icon": "app/assets/images/clipboard.png",
 			"target": [
 				"AppImage"
 			]
 		},
 		"mac": {
-			"icon": "assets/images/clipboard.png"
+			"icon": "app/assets/images/clipboard.png"
 		}
 	},
 	"keywords": [],
