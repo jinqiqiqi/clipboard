@@ -3,6 +3,7 @@ const path = require('node:path');
 const {
     app,
     ipcMain,
+    globalShortcut,
 } = require('electron');
 
 const AppConfig = require('./configuration');
@@ -64,6 +65,13 @@ class ElectronClipboard {
         this.clipboardWindow = new ClipBoardWindow();
     }
 
+    registerGlobalShortcut() {
+        const appTray = this.tray;
+        globalShortcut.register('CommandOrControl+Shift+C', () => {
+            appTray.tray.popUpContextMenu();
+        });
+    }
+
     initIPC() {
         ipcMain.handle('clipping:create-new', () => {
             newClippingToApp(tray, clippings)
@@ -73,6 +81,7 @@ class ElectronClipboard {
 
     createTray() {
         this.tray = new AppTray(this.clipboardWindow);
+        this.registerGlobalShortcut();
     }
 }
 

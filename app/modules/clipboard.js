@@ -2,10 +2,9 @@ const {
     clipboard,
     nativeImage,
     Notification,
-    BrowserWindow
+    BrowserWindow,
+    globalShortcut
 } = require("electron");
-
-const electronLocalShortcut = require('electron-localshortcut')
 
 const path = require('node:path');
 
@@ -89,13 +88,19 @@ class ClipBoardWindow {
     }
 
     registerLocalShortcut() {
-        electronLocalShortcut.register(this.clipboardWindow, 'CommandOrControl+H', () => {
-            this.clipboardWindow.hide();
+        globalShortcut.register('CommandOrControl+H', () => {
+            this.hide();
+            console.log("Global shortcut C+A+H pressed.");
         });
+
     }
+
+
+
     unregisterLocalShortcut() {
-        electronLocalShortcut.unregisterAll(this.clipboardWindow);
+        globalShortcut.unregisterAll();
     }
+
 }
 
 module.exports = ClipBoardWindow

@@ -17,9 +17,8 @@ class AppTray {
     constructor(clipboardWindow) {
         this.clipboardWindow = clipboardWindow;
         this.clipCountNumber = 0;
-        this.clippings = this.clipboardWindow.clippings;
+        this.tray = null;
         this.createTray();
-
     }
 
     createTray() {
@@ -44,7 +43,7 @@ class AppTray {
             }
         }, {
             type: 'separator'
-        }, ...this.clippings.slice(0, 20).map(this.generateClippingMenuItem), {
+        }, ...this.clipboardWindow.clippings.slice(0, 20).map(this.generateClippingMenuItem), {
             type: 'separator'
         }, {
             label: 'Exit',
@@ -61,6 +60,7 @@ class AppTray {
     }
 
     displayClipboardWindow() {
+        console.log("this.clipboardWindow.isShown: ", this.clipboardWindow.isShown)
         if (this.clipboardWindow.isShown) return;
         this.clipboardWindow.show();
     }
