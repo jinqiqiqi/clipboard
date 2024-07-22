@@ -1,6 +1,15 @@
 const { clipboard, nativeImage, Notification } = require("electron")
-const { updateTrayMenu } = require("./tray")
 const path = require('node:path')
+const { updateClipboardTrayMenu } = require("./app_tray")
+
+
+class ClipBoardWindow {
+    constructor() {
+        this.createWindow();
+        this.initClipboardWindowShortcut();
+        this.
+    }
+}
 
 const addClipping = (tray, clippings) => {
     const clipboardFormats = clipboard.availableFormats()
@@ -18,7 +27,8 @@ const addClipping = (tray, clippings) => {
     if (clippings.includes(clipping)) return;
     clippings.unshift(clipping)
     
-    updateTrayMenu(tray, clippings);
+    console.log("updateClipboardTrayMenu: ", updateClipboardTrayMenu)
+    updateClipboardTrayMenu(tray, clippings);
     return clipping;
 }
 
