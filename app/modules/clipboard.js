@@ -74,6 +74,15 @@ class ClipBoardWindow {
         this.loadUrl(path.join(__dirname, '../', ClipboardCommon.CLIPBOARD))
     }
 
+    toggle() {
+        if(this.isShown) {
+            this.hide();
+        }
+        else {
+            this.show();
+        }
+    }
+
     show() {
         this.clipboardWindow.show();
         this.clipboardWindow.focus();

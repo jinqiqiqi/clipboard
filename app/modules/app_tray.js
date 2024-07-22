@@ -10,7 +10,6 @@ const {
 } = require("electron");
 const ClipboardCommon = require('../common');
 
-
 const assetsImagePath = path.join(__dirname, '../assets/images');
 
 class AppTray {
@@ -33,6 +32,10 @@ class AppTray {
         });
 
         this.createOrUpdateTrayMenu();
+    }
+
+    showContextMenu() {
+        this.tray.popUpContextMenu();
     }
 
     createOrUpdateTrayMenu() {

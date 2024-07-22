@@ -67,8 +67,13 @@ class ElectronClipboard {
 
     registerGlobalShortcut() {
         const appTray = this.tray;
+        const clipboardWindow = this.clipboardWindow;
         globalShortcut.register('CommandOrControl+Shift+C', () => {
-            appTray.tray.popUpContextMenu();
+            appTray.showContextMenu();
+        });
+
+        globalShortcut.register('Alt+Shift+C', () => {
+            clipboardWindow.toggle();
         });
     }
 
