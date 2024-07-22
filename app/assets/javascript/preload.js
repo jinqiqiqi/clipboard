@@ -12,3 +12,5 @@ contextBridge.exposeInMainWorld('clipboardAPI', {
         ipcRenderer.invoke('clipping:select-required', clipping)
     }
 });
+
+console.log(" !!!!! preload.js loaded.")

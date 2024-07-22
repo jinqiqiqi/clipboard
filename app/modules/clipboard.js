@@ -19,7 +19,7 @@ class ClipBoardWindow {
         this.isShown = false;
         this.intervals = {};
         this.clipboardWindow = null;
-        this.assetsPath = '../assets/images/';
+        this.assetsPath = path.join(__dirname, '../assets');
         this.createWindow();
         this.initClipboardWindowShortcut();
         this.initWindowEvents();
@@ -37,7 +37,7 @@ class ClipBoardWindow {
             autoHideMenuBar: true,
             icon: path.join(__dirname, 'clipboard.png'),
             webPreferences: {
-                // preload: path.join(this.assetsPath, 'javascript/preload.js'),
+                preload: path.join(this.assetsPath, 'javascript/preload.js'),
             }
         };
         this.clipboardWindow = new BrowserWindow(windowOptions);

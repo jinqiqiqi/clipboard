@@ -4,12 +4,14 @@ const {
     app,
     ipcMain,
     globalShortcut,
+    Menu,
 } = require('electron');
 
 const AppConfig = require('./configuration');
 const ClipBoardWindow = require('./modules/clipboard');
 const ClipboardCommon = require('./common');
 const AppTray = require('./modules/app_tray');
+const AppMenu = require('./modules/menu');
 
 class ElectronClipboard {
     constructor() {
@@ -47,6 +49,7 @@ class ElectronClipboard {
         app.on('ready', () => {
             this.createClipboardWindow();
             this.createTray();
+            // this.createMenu();
 
             // placeholder for settings
             // if(!AppConfig.)
@@ -87,6 +90,11 @@ class ElectronClipboard {
     createTray() {
         this.tray = new AppTray(this.clipboardWindow);
         this.registerGlobalShortcut();
+    }
+
+    createMenu() {
+        const appMenu = new AppMenu();
+        appMenu.createMenu();
     }
 }
 
