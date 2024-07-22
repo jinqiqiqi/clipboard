@@ -1,70 +1,101 @@
-const { clipboard, nativeImage, Notification } = require("electron")
-const path = require('node:path')
-const { updateClipboardTrayMenu } = require("./app_tray")
+const {
+    clipboard,
+    nativeImage,
+    Notification,
+    BrowserWindow
+} = require("electron");
 
+const electronLocalShortcut = require('electron-localshortcut')
+
+const path = require('node:path');
+
+const {
+    updateClipboardTrayMenu
+} = require("./app_tray");
+
+const ClipboardCommon = require("../common");
 
 class ClipBoardWindow {
     constructor() {
+        this.isShown = false;
+        this.intervals = {};
+        this.clipboardWindow = null;
+        this.assetsPath = '../assets/images/';
         this.createWindow();
         this.initClipboardWindowShortcut();
-        this.
+        this.initWindowEvents();
+        this.initWindowWebContent();
+        this.clippings = ["aaa", 'bbb', 'cc'];
+    }
+
+    createWindow() {
+        const windowOptions = {
+            title: ClipboardCommon.ELECTRON_CLIPBOARD,
+            resizable: true,
+            center: true,
+            show: true,
+            frame: true,
+            autoHideMenuBar: true,
+            icon: path.join(__dirname, 'clipboard.png'),
+            webPreferences: {
+                // preload: path.join(this.assetsPath, 'javascript/preload.js'),
+            }
+        };
+        this.clipboardWindow = new BrowserWindow(windowOptions);
+    }
+
+    loadUrl(url) {
+        this.clipboardWindow.loadFile(url);
+    }
+
+    initClipboardWindowShortcut() {
+        this.registerLocalShortcut();
+    }
+    initWindowEvents() {
+        this.clipboardWindow.on('close', (e) => {
+            if (this.clipboardWindow.isVisible) {
+                e.preventDefault();
+                this.hide();
+            }
+            this.unregisterLocalShortcut();
+        });
+        this.clipboardWindow.on('show', () => {
+            this.registerLocalShortcut();
+        });
+
+    }
+    initWindowWebContent() {
+        this.connectClipboard();
+        this.clipboardWindow.webContents.on('dom-ready', () => {
+            // this.clipboardWindow.webContents.insertCSS(CSSInjector.commCSS);
+        });
+    }
+
+    connectClipboard() {
+        this.loadUrl(path.join(__dirname, '../', ClipboardCommon.CLIPBOARD))
+    }
+
+    show() {
+        this.clipboardWindow.show();
+        this.clipboardWindow.focus();
+        this.clipboardWindow.webContents.send('show-clipboard-window');
+        this.isShown = true;
+    }
+
+    hide() {
+        this.clipboardWindow.hide();
+        this.clipboardWindow.webContents.send('hide-clipboard-window');
+        this.isShown = false;
+    }
+
+    registerLocalShortcut() {
+        electronLocalShortcut.register(this.clipboardWindow, 'CommandOrControl+H', () => {
+            this.clipboardWindow.hide();
+        });
+    }
+    unregisterLocalShortcut() {
+        electronLocalShortcut.unregisterAll(this.clipboardWindow);
     }
 }
 
-const addClipping = (tray, clippings) => {
-    const clipboardFormats = clipboard.availableFormats()
-    const isClippingImage = clipboardFormats.some(item => item.includes('image'))
-    console.log(" ==> isClippingImage: ", isClippingImage)
-    let clipping = null;
-    if(isClippingImage) {
-        clipping = clipboard.readImage();
-        clipping = clipping.toDataURL();
-    }
-    else {
-        clipping = clipboard.readText();    
-    }
-    console.log(" ==> clipping: ", clipping)
-    if (clippings.includes(clipping)) return;
-    clippings.unshift(clipping)
-    
-    console.log("updateClipboardTrayMenu: ", updateClipboardTrayMenu)
-    updateClipboardTrayMenu(tray, clippings);
-    return clipping;
-}
-
-const newClippingToApp = async (tray, clippings) => {
-    const clipping = addClipping(tray, clippings);
-    const notificationObj = {}
-
-    if (clipping) {
-
-        const isImageFromClipping = clipping.includes('data:image');
-
-        notificationObj.img = nativeImage.createFromPath(path.join(__dirname, "../assets/images/clipboard@2x.png")).resize({width: 64, height: 64})
-        notificationObj.contentText = clipping
-        notificationObj.title = "Text added."
-
-        if(isImageFromClipping) {
-            notificationObj.img = nativeImage.createFromDataURL(clipping);
-            notificationObj.contentText = ``
-            notificationObj.title = "Image added."
-        }
-        
-        new Notification({
-            title: notificationObj.title,
-            body: notificationObj.contentText,
-            icon: notificationObj.img
-        }).show();
-        console.log(" ===> clipping returned in newClippingToApp()", clipping)
-        return clipping;
-    }
-    
-}
-
-const selectRequiredClipping = async (event, index) => {
-    console.log("index ", index);
-}
-
-module.exports = {
-    addClipping, newClippingToApp, selectRequiredClipping
-}
+module.exports = ClipBoardWindow

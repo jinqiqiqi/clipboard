@@ -33,7 +33,10 @@
 	"keywords": [],
 	"author": "qi.jin",
 	"license": "MIT",
-	"dependencies": {},
+	"dependencies": {
+		"electron-localshortcut": "^3.2.1",
+		"nconf": "^0.12.1"
+	},
 	"devDependencies": {
 		"electron": "^31.2.1",
 		"electron-builder": "^24.13.3"

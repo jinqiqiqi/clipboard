@@ -1,23 +1,24 @@
 'use strict';
 
-function getUserHome () {
-    return process.env[(process.platform === 'win32')? 'USERPROFILE': 'HOME'];
+function getUserHome() {
+	return process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
 }
 
 const nconf = require('nconf').file({
-    file: `${getUserHome()}/.config/ETClipboard.json`;
+	file: `${getUserHome()}/.config/ETClipboard.json`
 });
 
 function saveSettings(settingKey, settingValue) {
-    nconf.set(settingKey, settingValue);
-    nconf.save();
+	nconf.set(settingKey, settingValue);
+	nconf.save();
 }
 
 function readSettings(settingKey) {
-    nconf.load();
-    return nconf.get(settingKey);
+	nconf.load();
+	return nconf.get(settingKey);
 }
 
 module.exports = {
-    saveSettings, readSettings
+	saveSettings,
+	readSettings
 }

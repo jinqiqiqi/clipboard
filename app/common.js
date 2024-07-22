@@ -1,55 +1,53 @@
-const {
-	BrowserWindow,
-	Menu,
-	globalShortcut
-} = require('electron')
-const path = require('node:path')
-const {
-	clipboardMenu
-} = require('./modules/menu')
+class ClipboardCommon {
 
-const relativeFilePath = (fileName) => {
-	console.log("dirname (", __dirname, ") for fileName: ", fileName)
-	return path.join(__dirname, fileName)
-}
-
-const createWindow = () => {
-	console.log('Application built from Electron is starting...')
-
-	// Menu.setApplicationMenu(clipboardMenu)
-
-	mainWindow = new BrowserWindow({
-		width: 800,
-		height: 640,
-		webPreferences: {
-			preload: relativeFilePath('assets/javascript/preload.js'),
-			sandbox: false
-		},
-		icon: relativeFilePath('assets/images/clipboard.png'),
-		show: false,
-		// titleBarStyle: 'customButtonsOnHover'
-	});
-
-	mainWindow.loadFile(relativeFilePath('index.html'));
-
-	mainWindow.once('ready-to-show', () => {
-		mainWindow.show();
-	})
-
-	mainWindow.on('blur', () => {
-		if (!mainWindow.webContents.isDevToolsOpened()) {
-			mainWindow.hide();
-		}
-	})
-
-	// mainWindow.webContents.openDevTools()
-
-	return mainWindow
 }
 
 
 
-module.exports = {
-	relativeFilePath,
-	createWindow
+ClipboardCommon.ELECTRON = 'Electron';
+ClipboardCommon.ELECTRON_CLIPBOARD = 'Electron Clipboard';
+ClipboardCommon.DEBUG_MODE = false;
+ClipboardCommon.WINDOW_SIZE = {
+    width: 800,
+    height: 600
+};
+
+ClipboardCommon.CLIPBOARD = 'index.html';
+ClipboardCommon.MENU = {
+    about: 'About Electronic Clipboard',
+    hide: 'Hide Application',
+    hideOther: 'Hide Others',
+    showAll: 'Show All',
+    pref: 'Preference',
+    quit: 'Quit',
+    edit: 'Edit',
+    undo: 'Undo',
+    redo: 'Redo',
+    cut: 'Cut',
+    copy: 'Copy',
+    paste: 'Paste',
+    selectAll: 'Select All',
+    view: 'View',
+    reload: 'Reload This Window',
+    toggleFullScreen: 'Toggle Full Screen',
+    searchContacts: 'Search Contacts',
+    devtool: 'Toggle DevTools',
+    window: 'Window',
+    min: 'Minimize',
+    close: 'Close',
+    allFront: 'Bring All to Front',
+    help: 'Help',
+    repo: 'GitHub Repository',
+    feedback: 'Report Issue',
+    checkRelease: 'Check for New Release',
+};
+
+ClipboardCommon.MSG = (msg, prefix) => {
+    if (!prefix) {
+        console.log(":::::::msg:::::::  => ", msg);
+    } else {
+        console.log(`:::::::(${prefix})::::::: => `, msg);
+    }
 }
+
+module.exports = ClipboardCommon
