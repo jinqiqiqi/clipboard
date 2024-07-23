@@ -20,15 +20,15 @@ class ClipBoardWindowClass {
 		this.initClipboardWindowShortcut();
 		this.initWindowEvents();
 		this.initWindowWebContent();
-		this.clippings = ["aaa", 'bbb', 'cc'];
+		this.clippings = [];
 	}
 
 	createWindow() {
 		const windowOptions = {
 			title: ClipboardCommon.ELECTRON_CLIPBOARD,
-			resizable: true,
+			resizable: false,
 			center: true,
-			show: true,
+			show: false,
 			frame: true,
 			autoHideMenuBar: true,
 			icon: path.join(__dirname, 'clipboard.png'),
@@ -57,7 +57,9 @@ class ClipBoardWindowClass {
 		this.clipboardWindow.on('show', () => {
 			this.registerLocalShortcut();
 		});
-
+		this.clipboardWindow.on('blur', () => {
+			this.hide();
+		});
 	}
 	initWindowWebContent() {
 		this.connectClipboard();
@@ -65,7 +67,7 @@ class ClipBoardWindowClass {
 			// this.clipboardWindow.webContents.insertCSS(CSSInjector.commCSS);
 			this.clipboardWindow.webContents.send('clipping:render-list', this.clippings);
 			this.clipboardWindow.webContents.executeJavaScript(`initClippingList();`);
-			console.log("dom-ready()");
+			// console.log("dom-ready()");
 		});
 	}
 
@@ -97,7 +99,7 @@ class ClipBoardWindowClass {
 	registerLocalShortcut() {
 		globalShortcut.register('CommandOrControl+H', () => {
 			this.hide();
-			console.log("Global shortcut C+A+H pressed.");
+			// console.log("Global shortcut C+A+H pressed.");
 		});
 	}
 
@@ -117,9 +119,10 @@ class ClipBoardWindowClass {
 		if (this.clippings.includes(clipping)) {
 			// console.log(" ====>>>> Existing in clippings: ", clipping);
 			return null;
-		} else {
-			console.log(" ====>>>> new added clipping: ", clipping);
 		}
+		// else {
+		// 	console.log(" ====>>>> new added clipping: ", clipping);
+		// }
 		this.clippings.unshift(clipping);
 		this.clipboardWindow.webContents.executeJavaScript(`initClippingList();`);
 		return clipping;

@@ -12,11 +12,10 @@ clearStorageButton.addEventListener('click', () => {
 });
 
 clipboardContentList.addEventListener('click', async (event) => {
-
 	const indexNum = event.target.getAttribute("ref");
 	if (indexNum != null) {
 		event.preventDefault();
-		const res = await window.clipboardAPI.selectRequiredClipping(indexNum);
+		await window.clipboardAPI.selectRequiredClipping(indexNum);
 	}
 });
 
@@ -24,7 +23,6 @@ async function initClippingList() {
 	const clippings = await window.clipboardAPI.createNewClipping();
 	const linkElements = clippings.map(convertToElement).join('')
 	clipboardContentList.innerHTML = `<ul class="link">${linkElements}</ul>`;
-	console.log("clipping::initClippingList() [browser] = ", clippings);
 }
 
 const convertToElement = (clipping, index) => {
@@ -36,7 +34,7 @@ const convertToElement = (clipping, index) => {
 	};
 	if (isImageFromClipping) {
 		currentClipping.icon = clipping
-		currentClipping.content = "🏞️"
+		currentClipping.content = "[ 图片内容 ]"
 	}
 	const liHtml = `<li><a href="#${index}" ref="${index}"><img src="${currentClipping.icon}" ref="${index}" height="32" />${index}. ${currentClipping.content}</a></li>`;
 	return liHtml;

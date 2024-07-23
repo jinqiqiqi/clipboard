@@ -17,6 +17,15 @@ input {
 	color-scheme: light dark;
 }
 
+h1 {
+	text-align: center;
+}
+
+.ctl-create-new-clipping,
+.ctl-clear-storage {
+	display: none;
+}
+
 li {
 	width: 90%;
 	display: block;

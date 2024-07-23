@@ -4,7 +4,6 @@ const {
 	app,
 	ipcMain,
 	globalShortcut,
-	Menu,
 	clipboard,
 } = require('electron');
 
@@ -29,8 +28,6 @@ class ElectronClipboard {
 	}
 
 	checkInstance() {
-
-
 		const gotTheLock = app.requestSingleInstanceLock();
 		if (!gotTheLock) {
 			if (this.clipboardWindowClass) {
@@ -47,15 +44,11 @@ class ElectronClipboard {
 		app.on('ready', () => {
 			this.createClipboardWindow();
 			this.createTray();
-			// this.createMenu();
 			this.updateOrDisplayClippingListInWindow();
 
-
-			// setInterval(() => {
-			// 	// console.log(" === setInterval for this.createNewClipping()...")
-			// 	this.createNewClipping();
-			// }, 750);
-
+			setInterval(() => {
+				this.createNewClipping();
+			}, 750);
 		});
 
 		app.on('activate', () => {
@@ -96,7 +89,6 @@ class ElectronClipboard {
 			return this.createNewClipping();
 		});
 		ipcMain.handle('clipping:select-required', (event, indexNum) => {
-			console.log("clipping:select-required() is invoked. ", indexNum);
 
 			const clipping = this.clipboardWindowClass.clippings[indexNum]
 			const isImageFromClipping = clipping.includes('data:image');
@@ -108,9 +100,9 @@ class ElectronClipboard {
 
 		});
 
-		ipcMain.on('clipping:render-list', (event, arg) => {
-			console.log('handler:: clipping:render-list', arg);
-		})
+		// ipcMain.on('clipping:render-list', (event, arg) => {
+		// 	console.log('handler:: clipping:render-list', arg);
+		// })
 	}
 
 	createTray() {
@@ -124,14 +116,13 @@ class ElectronClipboard {
 	}
 
 	createNewClipping() {
-		const clipping = this.clipboardWindowClass.createNewClipping();
+		this.clipboardWindowClass.createNewClipping();
 		this.appTrayClass.createOrUpdateTrayMenu();
 		this.updateOrDisplayClippingListInWindow();
 		return this.clipboardWindowClass.clippings;
 	}
 
 	updateOrDisplayClippingListInWindow() {
-		console.log("updateOrDisplayClippingListInWindow() = > ", this.clipboardWindowClass.clippings);
 		this.clipboardWindowClass.clipboardWindow.webContents.send("clipping:render-list", this.clipboardWindowClass.clippings);
 	}
 }

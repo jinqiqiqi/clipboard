@@ -8,6 +8,7 @@ const {
 	Tray,
 	ipcMain
 } = require("electron");
+
 const ClipboardCommon = require('../common');
 
 const assetsImagePath = path.join(__dirname, '../assets/images');
@@ -63,7 +64,7 @@ class AppTray {
 	}
 
 	displayClipboardWindow() {
-		console.log("this.clipboardWindow.isShown: ", this.clipboardWindow.isShown)
+		// console.log("this.clipboardWindow.isShown: ", this.clipboardWindow.isShown)
 		if (this.clipboardWindow.isShown) return;
 		this.clipboardWindow.show();
 	}
@@ -83,7 +84,7 @@ class AppTray {
 		return {
 			label: clipping.length > trimLength ? `${index}. ` + clipping.slice(0, trimLength) + '...' : `${index}. ` + clipping,
 			click: () => {
-				console.log(">>> writeToClipboard() = ", clipping)
+				// console.log(">>> writeToClipboard() = ", clipping)
 				if (isImageFromClipping) {
 					clipboard.writeImage(img);
 				} else {

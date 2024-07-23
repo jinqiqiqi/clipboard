@@ -8,14 +8,13 @@ contextBridge.exposeInMainWorld('clipboardAPI', {
 		return ipcRenderer.invoke('clipping:create-new')
 	},
 	selectRequiredClipping: (clipping) => {
-		// console.log("clipping in selectRequiredClipping is: ", clipping)
 		ipcRenderer.invoke('clipping:select-required', clipping)
 	},
 	xxx: () => {
 		ipcRenderer.on('clipping:render-list', (event, dataArray) => {
-			console.log(" xxxx ", dataArray, event);
+			// console.log(" xxxx ", dataArray, event);
 		});
 	}
 });
 
-console.log(" !!!!! preload.js loaded.")
+// console.log(" !!!!! preload.js loaded.")
