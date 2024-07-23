@@ -5,6 +5,7 @@ const {
 	ipcMain,
 	globalShortcut,
 	Menu,
+	clipboard,
 } = require('electron');
 
 const AppConfig = require('./configuration');
@@ -98,7 +99,16 @@ class ElectronClipboard {
 		ipcMain.handle('clipping:create-new', () => {
 			return this.createNewClipping();
 		});
-		ipcMain.handle('clipping:select-required', () => {
+		ipcMain.handle('clipping:select-required', (event, indexNum) => {
+			console.log("clipping:select-required() is invoked. ", indexNum);
+
+			const clipping = this.clipboardWindowClass.clippings[indexNum]
+			const isImageFromClipping = clipping.includes('data:image');
+			if (isImageFromClipping) {
+				clipboard.writeImage(img);
+			} else {
+				clipboard.writeText(clipping);
+			}
 
 		});
 
