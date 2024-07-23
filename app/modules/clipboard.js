@@ -116,7 +116,7 @@ class ClipBoardWindowClass {
 		} else {
 			clipping = clipboard.readText();
 		}
-		if (this.clippings.includes(clipping)) {
+		if (clipping.length > 0 && this.clippings.includes(clipping)) {
 			// console.log(" ====>>>> Existing in clippings: ", clipping);
 			return false;
 		}
