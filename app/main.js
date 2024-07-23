@@ -8,7 +8,6 @@ const {
 	clipboard,
 } = require('electron');
 
-// const AppConfig = require('./configuration');
 const ClipBoardWindow = require('./modules/clipboard');
 const AppTray = require('./modules/app_tray');
 const AppMenu = require('./modules/menu');
@@ -31,7 +30,6 @@ class ElectronClipboard {
 
 	checkInstance() {
 
-		// // if (AppConfig.readSettings('nulti-instance') === 'on') return true;
 
 		const gotTheLock = app.requestSingleInstanceLock();
 		if (!gotTheLock) {
@@ -52,8 +50,6 @@ class ElectronClipboard {
 			// this.createMenu();
 			this.updateOrDisplayClippingListInWindow();
 
-			// placeholder for settings
-			if (!AppConfig.)
 
 			// setInterval(() => {
 			// 	// console.log(" === setInterval for this.createNewClipping()...")

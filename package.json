@@ -1,43 +1,41 @@
 {
-    "name": "Bookmarker",
-    "version": "1.0.0",
-    "description": "",
-    "email": "qi.jin@cn.supplyframe.com",
-    "main": "./app/main.js",
-    "scripts": {
-        "dev": "electron . --trace-warnings",
-        "build": "electron-builder",
-        "build:win": "electron-builder --windows",
-        "build:linux": "electron-builder --linux AppImage",
-        "build:macos": "electron-builder --macos",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "build": {
-        "appId": "com.eefocus.clipboard",
-        "directories": {
-            "output": "dist"
-        },
-        "win": {
-            "icon": "app/assets/images/clipboard.png"
-        },
-        "linux": {
-            "icon": "app/assets/images/clipboard.png",
-            "target": [
-                "AppImage"
-            ]
-        },
-        "mac": {
-            "icon": "app/assets/images/clipboard.png"
-        }
-    },
-    "keywords": [],
-    "author": "qi.jin",
-    "license": "MIT",
-    "dependencies": {
-        "nconf": "^0.12.1"
-    },
-    "devDependencies": {
-        "electron": "^31.2.1",
-        "electron-builder": "^24.13.3"
-    }
+	"name": "Bookmarker",
+	"version": "1.0.0",
+	"description": "",
+	"email": "qi.jin@cn.supplyframe.com",
+	"main": "./app/main.js",
+	"scripts": {
+		"dev": "electron . --trace-warnings",
+		"build": "electron-builder",
+		"build:win": "electron-builder --windows",
+		"build:linux": "electron-builder --linux AppImage",
+		"build:macos": "electron-builder --macos",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"build": {
+		"appId": "com.eefocus.clipboard",
+		"directories": {
+			"output": "dist"
+		},
+		"win": {
+			"icon": "app/assets/images/clipboard.png"
+		},
+		"linux": {
+			"icon": "app/assets/images/clipboard.png",
+			"target": [
+				"AppImage"
+			]
+		},
+		"mac": {
+			"icon": "app/assets/images/clipboard.png"
+		}
+	},
+	"keywords": [],
+	"author": "qi.jin",
+	"license": "MIT",
+	"dependencies": {},
+	"devDependencies": {
+		"electron": "^31.2.1",
+		"electron-builder": "^24.13.3"
+	}
 }
