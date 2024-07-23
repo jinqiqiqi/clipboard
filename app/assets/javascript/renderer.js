@@ -33,9 +33,7 @@ const convertToElement = (clipping, index) => {
 		icon: "assets/images/tick.png"
 	};
 	if (isImageFromClipping) {
-		currentClipping.icon = clipping
-		currentClipping.content = "[ 图片内容 ]"
+		currentClipping.content = `<img src="${clipping}" ref="${index}" height="32" />`
 	}
-	const liHtml = `<li><a href="#${index}" ref="${index}"><img src="${currentClipping.icon}" ref="${index}" height="32" /> ${currentClipping.content}</a></li>`;
-	return liHtml;
+	return `<li><a href="#${index}" ref="${index}"><img src="${currentClipping.icon}" ref="${index}" height="32" /> ${currentClipping.content}</a></li>`;
 }
