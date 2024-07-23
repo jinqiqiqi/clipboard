@@ -9,21 +9,20 @@ const {
 
 const AppConfig = require('./configuration');
 const ClipBoardWindow = require('./modules/clipboard');
-const ClipboardCommon = require('./common');
 const AppTray = require('./modules/app_tray');
 const AppMenu = require('./modules/menu');
 
 class ElectronClipboard {
 	constructor() {
-		this.tray = null;
-		this.clipboardWindow = null;
-		this.settingsWindow = null
+		this.appTrayClass = null;
+		this.clipboardWindowClass = null;
+		this.settingsWindowClass = null
 	}
 
 	init() {
 		if (!this.checkInstance()) {
 			this.initApp();
-			// this.initIPC();
+			this.initIPC();
 		} else {
 			app.quit();
 		}
@@ -35,11 +34,11 @@ class ElectronClipboard {
 
 		const gotTheLock = app.requestSingleInstanceLock();
 		if (!gotTheLock) {
-			if (this.clipboardWindow) {
-				this.clipboardWindow.show();
+			if (this.clipboardWindowClass) {
+				this.clipboardWindowClass.show();
 			}
-			if (this.settingsWindow && this.settingsWindow.isShown) {
-				this.settingsWindow.show();
+			if (this.settingsWindowClass && this.settingsWindowClass.isShown) {
+				this.settingsWindowClass.show();
 			}
 		}
 
@@ -50,33 +49,34 @@ class ElectronClipboard {
 			this.createClipboardWindow();
 			this.createTray();
 			// this.createMenu();
+			this.updateOrDisplayClippingListInWindow();
 
 			// placeholder for settings
 			// if(!AppConfig.)
 
-			setInterval(() => {
-				// console.log(" === setInterval for this.createNewClipping()...")
-				this.createNewClipping();
-			}, 750);
+			// setInterval(() => {
+			// 	// console.log(" === setInterval for this.createNewClipping()...")
+			// 	this.createNewClipping();
+			// }, 750);
 
 		});
 
 		app.on('activate', () => {
-			if (this.clipboardWindow == null) {
+			if (this.clipboardWindowClass == null) {
 				this.createClipboardWindow();
 			} else {
-				this.clipboardWindow.show();
+				this.clipboardWindowClass.show();
 			}
 		});
 	};
 
 	createClipboardWindow() {
-		this.clipboardWindow = new ClipBoardWindow();
+		this.clipboardWindowClass = new ClipBoardWindow();
 	}
 
 	registerGlobalShortcut() {
-		const appTray = this.tray;
-		const clipboardWindow = this.clipboardWindow;
+		const appTray = this.appTrayClass;
+		const clipboardWindow = this.clipboardWindowClass;
 		globalShortcut.register('Alt+Shift+C', () => {
 			appTray.showContextMenu();
 		});
@@ -88,17 +88,27 @@ class ElectronClipboard {
 		globalShortcut.register('CommandOrControl+Shift+C', () => {
 			this.createNewClipping();
 		});
+
+		globalShortcut.register('Alt+Shift+I', () => {
+			this.clipboardWindowClass.clipboardWindow.webContents.openDevTools();
+		});
 	}
 
 	initIPC() {
 		ipcMain.handle('clipping:create-new', () => {
-			newClippingToApp(tray, clippings)
+			return this.createNewClipping();
 		});
-		ipcMain.handle('clipping:select-required', selectRequiredClipping);
+		ipcMain.handle('clipping:select-required', () => {
+
+		});
+
+		ipcMain.on('clipping:render-list', (event, arg) => {
+			console.log('handler:: clipping:render-list', arg);
+		})
 	}
 
 	createTray() {
-		this.tray = new AppTray(this.clipboardWindow);
+		this.appTrayClass = new AppTray(this.clipboardWindowClass);
 		this.registerGlobalShortcut();
 	}
 
@@ -108,11 +118,16 @@ class ElectronClipboard {
 	}
 
 	createNewClipping() {
-		const clipping = this.clipboardWindow.createNewClipping();
-		this.tray.createOrUpdateTrayMenu();
+		const clipping = this.clipboardWindowClass.createNewClipping();
+		this.appTrayClass.createOrUpdateTrayMenu();
+		this.updateOrDisplayClippingListInWindow();
+		return this.clipboardWindowClass.clippings;
+	}
 
+	updateOrDisplayClippingListInWindow() {
+		console.log("updateOrDisplayClippingListInWindow() = > ", this.clipboardWindowClass.clippings);
+		this.clipboardWindowClass.clipboardWindow.webContents.send("clipping:render-list", this.clipboardWindowClass.clippings);
 	}
 }
-
 
 new ElectronClipboard().init();

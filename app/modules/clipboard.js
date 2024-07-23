@@ -10,7 +10,7 @@ const path = require('node:path');
 
 const ClipboardCommon = require("../common");
 
-class ClipBoardWindow {
+class ClipBoardWindowClass {
 	constructor() {
 		this.isShown = false;
 		this.intervals = {};
@@ -63,6 +63,9 @@ class ClipBoardWindow {
 		this.connectClipboard();
 		this.clipboardWindow.webContents.on('dom-ready', () => {
 			// this.clipboardWindow.webContents.insertCSS(CSSInjector.commCSS);
+			this.clipboardWindow.webContents.send('clipping:render-list', this.clippings);
+			this.clipboardWindow.webContents.executeJavaScript(`initClippingList();`);
+			console.log("dom-ready()");
 		});
 	}
 
@@ -118,9 +121,9 @@ class ClipBoardWindow {
 			console.log(" ====>>>> new added clipping: ", clipping);
 		}
 		this.clippings.unshift(clipping);
+		this.clipboardWindow.webContents.executeJavaScript(`initClippingList();`);
 		return clipping;
 	}
-
 }
 
-module.exports = ClipBoardWindow
+module.exports = ClipBoardWindowClass

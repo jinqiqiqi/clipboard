@@ -1,36 +1,47 @@
 html {
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 *,
 *:before,
 *:after {
-    box-sizing: inherit;
+	box-sizing: inherit;
 }
 
 body,
 input {
-    font: menu;
+	font: menu;
 }
 
 :root {
-    color-scheme: light dark;
+	color-scheme: light dark;
+}
+
+li {
+	width: 90%;
+	display: block;
+	border: 0;
+	height: 2.4em;
+	line-height: 2.4em;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
 
 .error-message {
-    color: red;
+	color: red;
 }
 
 @media (prefers-color-scheme: dark) {
-    body {
-        background: #333;
-        color: white;
-    }
+	body {
+		background: #333;
+		color: white;
+	}
 }
 
 @media (prefers-color-scheme: light) {
-    body {
-        background: #ddd;
-        color: black;
-    }
+	body {
+		background: #ddd;
+		color: black;
+	}
 }
