@@ -21,7 +21,6 @@ li {
 	width: 90%;
 	display: block;
 	border: 0;
-	height: 2.4em;
 	line-height: 2.4em;
 	text-overflow: ellipsis;
 	overflow: hidden;
