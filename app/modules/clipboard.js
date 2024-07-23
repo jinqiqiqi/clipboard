@@ -8,10 +8,6 @@ const {
 
 const path = require('node:path');
 
-const {
-	updateClipboardTrayMenu
-} = require("./app_tray");
-
 const ClipboardCommon = require("../common");
 
 class ClipBoardWindow {
@@ -74,7 +70,7 @@ class ClipBoardWindow {
 		this.loadUrl(path.join(__dirname, '../', ClipboardCommon.CLIPBOARD))
 	}
 
-	toggle() {
+	toggleClipboardWindow() {
 		if (this.isShown) {
 			this.hide();
 		} else {
@@ -100,13 +96,28 @@ class ClipBoardWindow {
 			this.hide();
 			console.log("Global shortcut C+A+H pressed.");
 		});
-
 	}
-
-
 
 	unregisterLocalShortcut() {
 		// globalShortcut.unregisterAll();
+	}
+
+	createNewClipping() {
+		this.clippings;
+		const clipboardFormats = clipboard.availableFormats();
+		const isImageClipping = clipboardFormats.some(item => item.includes('image'));
+		let clipping;
+		if (isImageClipping) {
+			clipping = clipboard.readImage().toDataURL();
+		} else {
+			clipping = clipboard.readText();
+		}
+		if (this.clippings.includes(clipping)) {
+			console.log("Existing in clippings.");
+			return null;
+		};
+		this.clippings.unshift(clipping);
+		return clipping;
 	}
 
 }
