@@ -30,12 +30,12 @@ const convertToElement = (clipping, index) => {
 	clipping = clipping.replace(/>/, "&gt;").replace(/</, '&lt;');
 	const currentClipping = {
 		content: clipping,
-		icon: "assets/images/clipboard.png"
+		icon: "assets/images/tick.png"
 	};
 	if (isImageFromClipping) {
 		currentClipping.icon = clipping
 		currentClipping.content = "[ 图片内容 ]"
 	}
-	const liHtml = `<li><a href="#${index}" ref="${index}"><img src="${currentClipping.icon}" ref="${index}" height="32" />${index}. ${currentClipping.content}</a></li>`;
+	const liHtml = `<li><a href="#${index}" ref="${index}"><img src="${currentClipping.icon}" ref="${index}" height="32" /> ${currentClipping.content}</a></li>`;
 	return liHtml;
 }

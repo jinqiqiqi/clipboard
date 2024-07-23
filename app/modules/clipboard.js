@@ -118,7 +118,7 @@ class ClipBoardWindowClass {
 		}
 		if (this.clippings.includes(clipping)) {
 			// console.log(" ====>>>> Existing in clippings: ", clipping);
-			return null;
+			return false;
 		}
 		// else {
 		// 	console.log(" ====>>>> new added clipping: ", clipping);

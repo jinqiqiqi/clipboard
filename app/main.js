@@ -117,9 +117,11 @@ class ElectronClipboard {
 	}
 
 	createNewClipping() {
-		this.clipboardWindowClass.createNewClipping();
-		this.appTrayClass.createOrUpdateTrayMenu();
-		this.updateOrDisplayClippingListInWindow();
+		const isAddedYet = this.clipboardWindowClass.createNewClipping();
+		if (isAddedYet) {
+			this.appTrayClass.createOrUpdateTrayMenu();
+			this.updateOrDisplayClippingListInWindow();
+		}
 		return this.clipboardWindowClass.clippings;
 	}
 

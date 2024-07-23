@@ -76,13 +76,13 @@ class AppTray {
 	generateClippingMenuItem(clipping, index) {
 		const trimLength = 50;
 		const isImageFromClipping = clipping.includes('data:image');
-		let img = nativeImage.createFromPath(path.join(assetsImagePath, "clipboard@2x.png"))
+		let img = nativeImage.createFromPath(path.join(assetsImagePath, "tick.png"))
 
 		if (isImageFromClipping) {
 			img = nativeImage.createFromDataURL(clipping);
 		}
 		return {
-			label: clipping.length > trimLength ? `${index}. ` + clipping.slice(0, trimLength) + '...' : `${index}. ` + clipping,
+			label: clipping.length > trimLength ? clipping.slice(0, trimLength) + '...' : clipping,
 			click: () => {
 				// console.log(">>> writeToClipboard() = ", clipping)
 				if (isImageFromClipping) {
