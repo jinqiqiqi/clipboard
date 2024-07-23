@@ -2,3 +2,5 @@ node_modules
 dist
 scratch
 .node-persist
+.pnpm-store
+package-lock.json

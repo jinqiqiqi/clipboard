@@ -1,8 +1,8 @@
 {
-	"name": "Bookmarker",
-	"version": "1.0.0",
+	"name": "Clipboard",
+	"version": "1.0.1",
 	"description": "",
-	"email": "qi.jin@cn.supplyframe.com",
+	"email": "jinqiqiqi@gmail.com",
 	"main": "./app/main.js",
 	"scripts": {
 		"dev": "electron . --trace-warnings",
@@ -31,7 +31,7 @@
 		}
 	},
 	"keywords": [],
-	"author": "qi.jin",
+	"author": "jinqiqiqi",
 	"license": "MIT",
 	"dependencies": {},
 	"devDependencies": {
