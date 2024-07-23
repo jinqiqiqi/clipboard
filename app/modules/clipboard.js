@@ -103,7 +103,6 @@ class ClipBoardWindow {
 	}
 
 	createNewClipping() {
-		this.clippings;
 		const clipboardFormats = clipboard.availableFormats();
 		const isImageClipping = clipboardFormats.some(item => item.includes('image'));
 		let clipping;
@@ -113,9 +112,11 @@ class ClipBoardWindow {
 			clipping = clipboard.readText();
 		}
 		if (this.clippings.includes(clipping)) {
-			console.log("Existing in clippings.");
+			// console.log(" ====>>>> Existing in clippings: ", clipping);
 			return null;
-		};
+		} else {
+			console.log(" ====>>>> new added clipping: ", clipping);
+		}
 		this.clippings.unshift(clipping);
 		return clipping;
 	}

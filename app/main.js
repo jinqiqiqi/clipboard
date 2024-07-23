@@ -53,6 +53,12 @@ class ElectronClipboard {
 
 			// placeholder for settings
 			// if(!AppConfig.)
+
+			setInterval(() => {
+				// console.log(" === setInterval for this.createNewClipping()...")
+				this.createNewClipping();
+			}, 750);
+
 		});
 
 		app.on('activate', () => {
