@@ -5,6 +5,7 @@ const {
 	ipcMain,
 	globalShortcut,
 	clipboard,
+	nativeImage,
 } = require('electron');
 
 const ClipBoardWindow = require('./modules/clipboard');
@@ -90,14 +91,14 @@ class ElectronClipboard {
 		});
 		ipcMain.handle('clipping:select-required', (event, indexNum) => {
 
-			const clipping = this.clipboardWindowClass.clippings[indexNum]
+			const clipping = this.clipboardWindowClass.clippings[indexNum];
 			const isImageFromClipping = clipping.includes('data:image');
 			if (isImageFromClipping) {
-				clipboard.writeImage(img);
+				clipboard.writeImage(nativeImage.createFromDataURL(clipping));
 			} else {
 				clipboard.writeText(clipping);
 			}
-
+			this.clipboardWindowClass.clipboardWindow.hide();
 		});
 
 		// ipcMain.on('clipping:render-list', (event, arg) => {
