@@ -65,7 +65,7 @@ class ClipBoardWindowClass {
 
 		this.clipboardWindow.on('ready-to-show', () => {
 			this.show();
-		})
+		});
 	}
 	initWindowWebContent() {
 		this.connectClipboard();
@@ -78,7 +78,7 @@ class ClipBoardWindowClass {
 	}
 
 	connectClipboard() {
-		this.loadUrl(path.join(__dirname, '../', ClipboardCommon.CLIPBOARD))
+		this.loadUrl(path.join(__dirname, '../', ClipboardCommon.CLIPBOARD));
 	}
 
 	toggleClipboardWindow() {

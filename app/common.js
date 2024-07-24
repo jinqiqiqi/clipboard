@@ -1,8 +1,9 @@
+const {
+	version
+} = require("../package.json");
 class ClipboardCommon {
 
 }
-
-
 
 ClipboardCommon.ELECTRON = 'Electron';
 ClipboardCommon.ELECTRON_CLIPBOARD = 'Electron Clipboard';
@@ -40,6 +41,7 @@ ClipboardCommon.MENU = {
 	repo: 'GitHub Repository',
 	feedback: 'Report Issue',
 	checkRelease: 'Check for New Release',
+	version: `${version}`
 };
 
 ClipboardCommon.MSG = (msg, prefix) => {
@@ -50,4 +52,4 @@ ClipboardCommon.MSG = (msg, prefix) => {
 	}
 }
 
-module.exports = ClipboardCommon
+module.exports = ClipboardCommon;

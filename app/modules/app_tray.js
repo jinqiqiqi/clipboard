@@ -52,7 +52,7 @@ class AppTray {
 		}, {
 			label: 'Exit',
 			click: () => {
-				app.exit(0)
+				app.exit(0);
 			}
 		}]);
 		this.tray.setContextMenu(trayMenu);
@@ -76,7 +76,7 @@ class AppTray {
 	generateClippingMenuItem(clipping, index) {
 		const trimLength = 50;
 		const isImageFromClipping = clipping.includes('data:image');
-		let img = nativeImage.createFromPath(path.join(assetsImagePath, "tick.png"))
+		let img = nativeImage.createFromPath(path.join(assetsImagePath, "tick.png"));
 
 		if (isImageFromClipping) {
 			img = nativeImage.createFromDataURL(clipping);
@@ -96,9 +96,9 @@ class AppTray {
 				height: 32
 			}),
 			accelerator: `CommandOrControl+${index}`
-		}
+		};
 	}
 
 }
 
-module.exports = AppTray
+module.exports = AppTray;

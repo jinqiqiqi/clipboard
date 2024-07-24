@@ -1,5 +1,3 @@
-const path = require('node:path');
-
 const {
 	app,
 	ipcMain,
@@ -16,7 +14,7 @@ class ElectronClipboard {
 	constructor() {
 		this.appTrayClass = null;
 		this.clipboardWindowClass = null;
-		this.settingsWindowClass = null
+		this.settingsWindowClass = null;
 	}
 
 	init() {
@@ -45,6 +43,7 @@ class ElectronClipboard {
 		app.on('ready', () => {
 			this.createClipboardWindow();
 			this.createTray();
+			this.createMenu();
 			this.updateOrDisplayClippingListInWindow();
 
 			setInterval(() => {
@@ -59,7 +58,7 @@ class ElectronClipboard {
 				this.clipboardWindowClass.show();
 			}
 		});
-	};
+	}
 
 	createClipboardWindow() {
 		this.clipboardWindowClass = new ClipBoardWindow();
