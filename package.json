@@ -1,6 +1,6 @@
 {
 	"name": "Clipboard",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "",
 	"email": "jinqiqiqi@gmail.com",
 	"main": "./app/main.js",
