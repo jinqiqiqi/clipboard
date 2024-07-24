@@ -3,19 +3,26 @@ const clipboardContentList = document.querySelector('.clipboard-content-list');
 const errorMessage = document.querySelector('.error-message');
 const clearStorageButton = document.querySelector('.clear-storage');
 
+
 createNewClipping.addEventListener('click', async () => {
 	initClippingList()
 });
+
+
 
 clearStorageButton.addEventListener('click', () => {
 	clipboardContentList.innerHTML = '';
 });
 
 clipboardContentList.addEventListener('click', async (event) => {
-	const indexNum = event.target.getAttribute("ref");
+	event.preventDefault();
+	let indexNum = event.target.getAttribute("ref");
 	if (indexNum != null) {
-		event.preventDefault();
 		await window.clipboardAPI.selectRequiredClipping(indexNum);
+	} else {
+		indexNum = event.target.parentNode.getAttribute('ref');
+		await window.clipboardAPI.removeSelectedClipping(indexNum);
+		initClippingList();
 	}
 });
 
@@ -35,5 +42,5 @@ const convertToElement = (clipping, index) => {
 	if (isImageFromClipping) {
 		currentClipping.content = `<img src="${clipping}" ref="${index}" height="32" />`
 	}
-	return `<li ref="${index}"><a href="#${index}" ref="${index}"><img src="${currentClipping.icon}" ref="${index}" height="32" /> ${currentClipping.content}</a></li>`;
+	return `<li ref="${index}"><a href="#${index}" ref="${index}"><img src="${currentClipping.icon}" ref="${index}" height="32" /> ${currentClipping.content}</a><button ref="${index}" class="remove_item"><img height="16" src="./assets/images/cross.png"></button></li>`;
 }

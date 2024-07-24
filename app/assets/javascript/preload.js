@@ -8,7 +8,10 @@ contextBridge.exposeInMainWorld('clipboardAPI', {
 		return ipcRenderer.invoke('clipping:create-new')
 	},
 	selectRequiredClipping: (clipping) => {
-		ipcRenderer.invoke('clipping:select-required', clipping)
+		ipcRenderer.invoke('clipping:select-required', clipping);
+	},
+	removeSelectedClipping: (clipping) => {
+		ipcRenderer.invoke('clipping:remove-required', clipping);
 	},
 	xxx: () => {
 		ipcRenderer.on('clipping:render-list', (event, dataArray) => {

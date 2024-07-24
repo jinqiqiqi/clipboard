@@ -27,7 +27,7 @@ h1 {
 	display: none;
 }
 
-ul {
+ul.link {
 	display: block;
 }
 
@@ -40,6 +40,7 @@ li {
 	overflow: hidden;
 	white-space: nowrap;
 	list-style: square inside url('../../assets/images/tick.png');
+	position: relative;
 }
 
 li:hover {
@@ -72,11 +73,22 @@ a img {
 	margin-right: 20px;
 }
 
+button.remove_item {
+	color: yellow;
+	display: block;
+	float: right;
+	border: 0px;
+	background: transparent;
+	position: absolute;
+	right: 0px;
+	top: 0.7em;
+}
+
 @media (prefers-color-scheme: dark) {
 	body {
 		background: #333;
 		color: white;
-		/* -webkit-app-region: drag; */
+		-webkit-app-region: drag;
 		-webkit-user-select: none;
 	}
 }
@@ -85,7 +97,7 @@ a img {
 	body {
 		background: #ddd;
 		color: black;
-		/* -webkit-app-region: drag; */
+		-webkit-app-region: drag;
 		-webkit-user-select: none;
 	}
 }

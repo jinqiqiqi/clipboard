@@ -101,6 +101,13 @@ class ElectronClipboard {
 			this.clipboardWindowClass.clipboardWindow.hide();
 		});
 
+		ipcMain.handle('clipping:remove-required', (event, indexNum) => {
+			this.clipboardWindowClass.clippings.splice(indexNum, 1);
+			this.appTrayClass.createOrUpdateTrayMenu();
+			this.updateOrDisplayClippingListInWindow();
+		});
+
+
 		// ipcMain.on('clipping:render-list', (event, arg) => {
 		// 	console.log('handler:: clipping:render-list', arg);
 		// })
