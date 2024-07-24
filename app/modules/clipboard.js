@@ -27,12 +27,12 @@ class ClipBoardWindowClass {
 			resizable: false,
 			center: true,
 			show: false,
-			frame: false,
+			// frame: false,
 			// transparent: true,
 			width: 600,
 			height: 450,
 			autoHideMenuBar: true,
-			titleBarStyle: 'hidden',
+			// titleBarStyle: 'hidden',
 			icon: path.join(__dirname, 'clipboard.png'),
 			webPreferences: {
 				preload: path.join(this.assetsPath, 'javascript/preload.js'),
@@ -60,8 +60,12 @@ class ClipBoardWindowClass {
 			this.registerLocalShortcut();
 		});
 		this.clipboardWindow.on('blur', () => {
-			this.hide();
+			// this.hide();
 		});
+
+		this.clipboardWindow.on('ready-to-show', () => {
+			this.show();
+		})
 	}
 	initWindowWebContent() {
 		this.connectClipboard();
@@ -118,7 +122,7 @@ class ClipBoardWindowClass {
 		} else {
 			clipping = clipboard.readText().trim();
 		}
-		if (clipping.length < 1 || this.clippings.includes(clipping)) {
+		if (clipping.length < 1 || this.clippings.includes(clipping) || clipping == "data:image/png;base64,") {
 			// console.log(" ====>>>> Existing in clippings: ", clipping);
 			return false;
 		}
