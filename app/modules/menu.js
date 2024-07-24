@@ -40,16 +40,7 @@ class AppMenu {
 			menuTemplate.unshift({
 				label: Common.ELECTRON_CLIPBOARD,
 				submenu: [{
-						label: Common.MENU.about,
-						role: 'orderFrontStandardAboutPanel:',
-					},
-					{
-						type: 'separator',
-					},
-					{
-						label: Common.MENU.hide,
-						accelerator: 'CommandOrControl+H',
-						role: 'hide',
+						label: Common.MENU.version
 					},
 					{
 						type: 'separator',
