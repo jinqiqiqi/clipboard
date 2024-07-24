@@ -12,24 +12,6 @@
 		"build:macos": "electron-builder --macos",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
-	"build": {
-		"appId": "com.eefocus.clipboard",
-		"directories": {
-			"output": "dist"
-		},
-		"win": {
-			"icon": "app/assets/images/clipboard.png"
-		},
-		"linux": {
-			"icon": "app/assets/images/clipboard.png",
-			"target": [
-				"AppImage"
-			]
-		},
-		"mac": {
-			"icon": "app/assets/images/clipboard.png"
-		}
-	},
 	"keywords": [],
 	"author": "jinqiqiqi",
 	"license": "MIT",
