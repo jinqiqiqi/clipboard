@@ -11,6 +11,7 @@ html {
 body,
 input {
 	font: menu;
+	font-size: 1em;
 }
 
 :root {
@@ -26,6 +27,10 @@ h1 {
 	display: none;
 }
 
+ul {
+	display: block;
+}
+
 li {
 	width: 90%;
 	display: block;
@@ -34,6 +39,16 @@ li {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+	list-style: square inside url('../../assets/images/tick.png');
+}
+
+li:hover {
+	background-color: #adadad;
+}
+
+li:hover a {
+	color: #ffee00;
+	font-weight: bold;
 }
 
 li img {
@@ -45,10 +60,24 @@ li img {
 	color: red;
 }
 
+a,
+img {
+	-webkit-app-region: no-drag;
+	text-decoration: none;
+	color: #000000;
+	font-weight: bold;
+}
+
+a img {
+	margin-right: 20px;
+}
+
 @media (prefers-color-scheme: dark) {
 	body {
 		background: #333;
 		color: white;
+		/* -webkit-app-region: drag; */
+		-webkit-user-select: none;
 	}
 }
 
@@ -56,5 +85,7 @@ li img {
 	body {
 		background: #ddd;
 		color: black;
+		/* -webkit-app-region: drag; */
+		-webkit-user-select: none;
 	}
 }

@@ -35,5 +35,5 @@ const convertToElement = (clipping, index) => {
 	if (isImageFromClipping) {
 		currentClipping.content = `<img src="${clipping}" ref="${index}" height="32" />`
 	}
-	return `<li><a href="#${index}" ref="${index}"><img src="${currentClipping.icon}" ref="${index}" height="32" /> ${currentClipping.content}</a></li>`;
+	return `<li ref="${index}"><a href="#${index}" ref="${index}"><img src="${currentClipping.icon}" ref="${index}" height="32" /> ${currentClipping.content}</a></li>`;
 }

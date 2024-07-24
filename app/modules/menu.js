@@ -1,6 +1,5 @@
 const {
-	Menu,
-	remote
+	Menu
 } = require("electron");
 const Common = require('../common');
 class AppMenu {

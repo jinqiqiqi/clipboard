@@ -1,7 +1,5 @@
 const {
 	clipboard,
-	nativeImage,
-	Notification,
 	BrowserWindow,
 	globalShortcut
 } = require("electron");
@@ -29,8 +27,12 @@ class ClipBoardWindowClass {
 			resizable: false,
 			center: true,
 			show: false,
-			frame: true,
+			frame: false,
+			// transparent: true,
+			width: 600,
+			height: 450,
 			autoHideMenuBar: true,
+			titleBarStyle: 'hidden',
 			icon: path.join(__dirname, 'clipboard.png'),
 			webPreferences: {
 				preload: path.join(this.assetsPath, 'javascript/preload.js'),
@@ -114,9 +116,9 @@ class ClipBoardWindowClass {
 		if (isImageClipping) {
 			clipping = clipboard.readImage().toDataURL();
 		} else {
-			clipping = clipboard.readText();
+			clipping = clipboard.readText().trim();
 		}
-		if (clipping.length > 0 && this.clippings.includes(clipping)) {
+		if (clipping.length < 1 || this.clippings.includes(clipping)) {
 			// console.log(" ====>>>> Existing in clippings: ", clipping);
 			return false;
 		}
