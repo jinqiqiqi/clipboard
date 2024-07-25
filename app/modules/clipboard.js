@@ -27,12 +27,12 @@ class ClipBoardWindowClass {
 			resizable: false,
 			center: true,
 			show: false,
-			// frame: false,
+			frame: false,
 			// transparent: true,
 			width: 600,
 			height: 450,
 			autoHideMenuBar: true,
-			// titleBarStyle: 'hidden',
+			titleBarStyle: 'hidden',
 			icon: path.join(__dirname, 'clipboard.png'),
 			webPreferences: {
 				preload: path.join(this.assetsPath, 'javascript/preload.js'),
@@ -60,7 +60,7 @@ class ClipBoardWindowClass {
 			this.registerLocalShortcut();
 		});
 		this.clipboardWindow.on('blur', () => {
-			// this.hide();
+			this.hide();
 		});
 
 		this.clipboardWindow.on('ready-to-show', () => {
