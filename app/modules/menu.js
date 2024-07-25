@@ -1,10 +1,12 @@
 const {
-	Menu, app
+	Menu,
+	app
 } = require("electron");
 const Common = require('../common');
 class AppMenu {
-	constructor() {
+	constructor(clipboardWindowClass) {
 		this.template = [];
+		this.clipboardWindowClass = clipboardWindowClass;
 	}
 
 	createMenu() {
@@ -16,7 +18,7 @@ class AppMenu {
 	}
 
 	getTemplate(platform) {
-
+		const mainWndow = this.clipboardWindowClass;
 		const menuTemplate = [{
 				label: Common.MENU.view,
 				submenu: [{
@@ -34,6 +36,14 @@ class AppMenu {
 			{
 				label: Common.MENU.version
 			},
+			{
+				label: 'sendFromMaster',
+				accelerator: 'CommandOrControl+F',
+				click: () => {
+					mainWndow.clipboardWindow.webContents.send('clipping:init-list', 'menu');
+					console.log("mainWndow.clipboardWindow.webContents.send('clipping:init-list'); => invoked.")
+				}
+			}
 		];
 
 		if (platform == 'darwin') {
@@ -49,8 +59,8 @@ class AppMenu {
 						label: Common.MENU.quit,
 						accelerator: 'CommandOrControl+Q',
 						click: () => {
-              app.exit(0)
-            },
+							app.exit(0)
+						},
 					},
 				],
 			});

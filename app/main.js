@@ -10,8 +10,6 @@ const ClipBoardWindow = require('./modules/clipboard');
 const AppTray = require('./modules/app_tray');
 const AppMenu = require('./modules/menu');
 
-
-
 class ElectronClipboard {
 	constructor() {
 		this.appTrayClass = null;
@@ -22,7 +20,6 @@ class ElectronClipboard {
 	init() {
 		if (!this.checkInstance()) {
 			this.initApp();
-			this.initIPC();
 		} else {
 			app.quit();
 		}
@@ -51,6 +48,7 @@ class ElectronClipboard {
 			setInterval(() => {
 				this.createNewClipping();
 			}, 750);
+
 		});
 
 		app.on('activate', () => {
@@ -60,6 +58,12 @@ class ElectronClipboard {
 				this.clipboardWindowClass.show();
 			}
 		});
+
+
+		app.whenReady().then(() => {
+			this.initIPC();
+		});
+
 	}
 
 	createClipboardWindow() {
@@ -108,10 +112,6 @@ class ElectronClipboard {
 			this.updateOrDisplayClippingListInWindow();
 		});
 
-
-		// ipcMain.on('clipping:render-list', (event, arg) => {
-		// 	console.log('handler:: clipping:render-list', arg);
-		// })
 	}
 
 	createTray() {
@@ -120,7 +120,7 @@ class ElectronClipboard {
 	}
 
 	createMenu() {
-		const appMenu = new AppMenu();
+		const appMenu = new AppMenu(this.clipboardWindowClass);
 		appMenu.createMenu();
 	}
 
@@ -137,5 +137,6 @@ class ElectronClipboard {
 		this.clipboardWindowClass.clipboardWindow.webContents.send("clipping:render-list", this.clipboardWindowClass.clippings);
 	}
 }
+
 
 new ElectronClipboard().init();

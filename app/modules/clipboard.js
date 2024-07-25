@@ -24,15 +24,15 @@ class ClipBoardWindowClass {
 	createWindow() {
 		const windowOptions = {
 			title: ClipboardCommon.ELECTRON_CLIPBOARD,
-			resizable: false,
+			// resizable: false,
 			center: true,
 			show: false,
-			frame: false,
+			// frame: false,
 			// transparent: true,
 			width: 600,
 			height: 450,
-			autoHideMenuBar: true,
-			titleBarStyle: 'hidden',
+			// autoHideMenuBar: true,
+			// titleBarStyle: 'hidden',
 			icon: path.join(__dirname, 'clipboard.png'),
 			webPreferences: {
 				preload: path.join(this.assetsPath, 'javascript/preload.js'),
@@ -60,7 +60,7 @@ class ClipBoardWindowClass {
 			this.registerLocalShortcut();
 		});
 		this.clipboardWindow.on('blur', () => {
-			this.hide();
+			// this.hide();
 		});
 
 		this.clipboardWindow.on('ready-to-show', () => {
@@ -72,7 +72,8 @@ class ClipBoardWindowClass {
 		this.clipboardWindow.webContents.on('dom-ready', () => {
 			// this.clipboardWindow.webContents.insertCSS(CSSInjector.commCSS);
 			this.clipboardWindow.webContents.send('clipping:render-list', this.clippings);
-			this.clipboardWindow.webContents.executeJavaScript(`initClippingList();`);
+			this.clipboardWindow.webContents.send('clipping:init-list', "init");
+			// this.clipboardWindow.webContents.executeJavaScript(`initClippingList();`);
 			// console.log("dom-ready()");
 		});
 	}
@@ -130,7 +131,8 @@ class ClipBoardWindowClass {
 		// 	console.log(" ====>>>> new added clipping: ", clipping);
 		// }
 		this.clippings.unshift(clipping);
-		this.clipboardWindow.webContents.executeJavaScript(`initClippingList();`);
+		// this.clipboardWindow.webContents.executeJavaScript(`initClippingList();`);
+		this.clipboardWindow.webContents.send('clipping:init-list', "creating");
 		return clipping;
 	}
 }

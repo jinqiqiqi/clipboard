@@ -13,11 +13,11 @@ contextBridge.exposeInMainWorld('clipboardAPI', {
 	removeSelectedClipping: (clipping) => {
 		ipcRenderer.invoke('clipping:remove-required', clipping);
 	},
-	xxx: () => {
-		ipcRenderer.on('clipping:render-list', (event, dataArray) => {
-			// console.log(" xxxx ", dataArray, event);
+	initClippingData: async () => {
+		ipcRenderer.on('clipping:init-list', async (event, value) => {
+			console.log("initClippingList() invoked on:initClippingList();");
+			await window.initClippingList();
+			console.log("ipcRender clippxing:init-list, ", value)
 		});
 	}
 });
-
-// console.log(" !!!!! preload.js loaded.")

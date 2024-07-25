@@ -3,12 +3,16 @@ const clipboardContentList = document.querySelector('.clipboard-content-list');
 const errorMessage = document.querySelector('.error-message');
 const clearStorageButton = document.querySelector('.clear-storage');
 
+const clipboardTitle = document.querySelector('#clipboardTitle');
+
+clipboardTitle.addEventListener('click', () => {
+	window.clipboardAPI.initClippingData();
+	console.log('clipboard title is clicked.');
+})
 
 createNewClipping.addEventListener('click', async () => {
-	initClippingList()
+	await initClippingList();
 });
-
-
 
 clearStorageButton.addEventListener('click', () => {
 	clipboardContentList.innerHTML = '';
@@ -22,7 +26,7 @@ clipboardContentList.addEventListener('click', async (event) => {
 	} else {
 		indexNum = event.target.parentNode.getAttribute('ref');
 		await window.clipboardAPI.removeSelectedClipping(indexNum);
-		initClippingList();
+		await initClippingList();
 	}
 });
 
