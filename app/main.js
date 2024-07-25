@@ -10,6 +10,8 @@ const ClipBoardWindow = require('./modules/clipboard');
 const AppTray = require('./modules/app_tray');
 const AppMenu = require('./modules/menu');
 
+
+
 class ElectronClipboard {
 	constructor() {
 		this.appTrayClass = null;

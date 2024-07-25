@@ -1,5 +1,5 @@
 const {
-	Menu
+	Menu, app
 } = require("electron");
 const Common = require('../common');
 class AppMenu {
@@ -48,7 +48,9 @@ class AppMenu {
 					{
 						label: Common.MENU.quit,
 						accelerator: 'CommandOrControl+Q',
-						click: AppMenu._quitApp,
+						click: () => {
+              app.exit(0)
+            },
 					},
 				],
 			});
