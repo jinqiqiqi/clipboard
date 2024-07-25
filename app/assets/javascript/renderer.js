@@ -5,8 +5,8 @@ const clearStorageButton = document.querySelector('.clear-storage');
 
 const clipboardTitle = document.querySelector('#clipboardTitle');
 
-clipboardTitle.addEventListener('click', () => {
-	window.clipboardAPI.initClippingData();
+clipboardTitle.addEventListener('click', async () => {
+	await window.clipboardAPI.initClippingData();
 	console.log('clipboard title is clicked.');
 })
 

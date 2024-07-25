@@ -48,6 +48,7 @@ class ClipBoardWindowClass {
 	initClipboardWindowShortcut() {
 		this.registerLocalShortcut();
 	}
+
 	initWindowEvents() {
 		this.clipboardWindow.on('close', (e) => {
 			if (this.clipboardWindow.isVisible) {
@@ -71,9 +72,8 @@ class ClipBoardWindowClass {
 		this.connectClipboard();
 		this.clipboardWindow.webContents.on('dom-ready', () => {
 			// this.clipboardWindow.webContents.insertCSS(CSSInjector.commCSS);
-			this.clipboardWindow.webContents.send('clipping:render-list', this.clippings);
-			this.clipboardWindow.webContents.send('clipping:init-list', "init");
-			// this.clipboardWindow.webContents.executeJavaScript(`initClippingList();`);
+			// this.clipboardWindow.webContents.send('clipping:init-list', "init");
+			this.clipboardWindow.webContents.executeJavaScript(`initClippingList();`);
 			// console.log("dom-ready()");
 		});
 	}
@@ -93,13 +93,13 @@ class ClipBoardWindowClass {
 	show() {
 		this.clipboardWindow.show();
 		this.clipboardWindow.focus();
-		this.clipboardWindow.webContents.send('show-clipboard-window');
+		// this.clipboardWindow.webContents.send('show-clipboard-window');
 		this.isShown = true;
 	}
 
 	hide() {
 		this.clipboardWindow.hide();
-		this.clipboardWindow.webContents.send('hide-clipboard-window');
+		// this.clipboardWindow.webContents.send('hide-clipboard-window');
 		this.isShown = false;
 	}
 
@@ -131,8 +131,8 @@ class ClipBoardWindowClass {
 		// 	console.log(" ====>>>> new added clipping: ", clipping);
 		// }
 		this.clippings.unshift(clipping);
-		// this.clipboardWindow.webContents.executeJavaScript(`initClippingList();`);
-		this.clipboardWindow.webContents.send('clipping:init-list', "creating");
+		this.clipboardWindow.webContents.executeJavaScript(`initClippingList();`);
+		// this.clipboardWindow.webContents.send('clipping:init-list', "creating");
 		return clipping;
 	}
 }

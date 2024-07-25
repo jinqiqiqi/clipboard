@@ -1,7 +1,7 @@
+const { electronLocalshortcut } = require('electron-localshortcut');
 const {
 	app,
 	ipcMain,
-	globalShortcut,
 	clipboard,
 	nativeImage,
 } = require('electron');
@@ -72,20 +72,22 @@ class ElectronClipboard {
 
 	registerGlobalShortcut() {
 		const appTray = this.appTrayClass;
-		const clipboardWindow = this.clipboardWindowClass;
-		globalShortcut.register('Alt+Shift+C', () => {
+		const clipboardWindow = this.clipboardWindowClass.clipboardWindow;
+
+
+		electronLocalshortcut.register(ClipBoardWindow, 'Alt+Shift+C', () => {
 			appTray.showContextMenu();
 		});
 
-		globalShortcut.register('Alt+Shift+V', () => {
+		electronLocalshortcut.register(ClipBoardWindow, 'Alt+Shift+V', () => {
 			clipboardWindow.toggleClipboardWindow();
 		});
 
-		globalShortcut.register('CommandOrControl+Shift+C', () => {
+		electronLocalshortcut.register(ClipBoardWindow, 'CommandOrControl+Shift+C', () => {
 			this.createNewClipping();
 		});
 
-		globalShortcut.register('Alt+Shift+I', () => {
+		electronLocalshortcut.register(ClipBoardWindow, ['Alt+Shift+I', 'Alt+Shift+F'], () => {
 			this.clipboardWindowClass.clipboardWindow.webContents.openDevTools();
 		});
 	}
@@ -134,7 +136,7 @@ class ElectronClipboard {
 	}
 
 	updateOrDisplayClippingListInWindow() {
-		this.clipboardWindowClass.clipboardWindow.webContents.send("clipping:render-list", this.clipboardWindowClass.clippings);
+		console.log(">>> updateOrDisplayClippingListInWindow()")
 	}
 }
 
