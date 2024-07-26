@@ -1,5 +1,5 @@
 {
-    "name": "Clipboard",
+    "name": "clipboard",
     "version": "1.0.5",
     "description": "This application will help you collect text or image from clipboard of your system.",
     "email": "jinqiqiqi@gmail.com",
@@ -18,7 +18,9 @@
     "devDependencies": {
         "electron": "^31.3.0",
         "electron-builder": "^24.13.3",
-        "electron-localshortcut": "^3.2.1",
         "electronmon": "^2.0.3"
+    },
+    "dependencies": {
+        "electron-localshortcut": "^3.2.1"
     }
 }

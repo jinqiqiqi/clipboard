@@ -23,16 +23,16 @@ class ClipBoardWindowClass {
 
     createWindow() {
         const windowOptions = {
-            title: ClipboardCommon.ELECTRON_CLIPBOARD,
-            // resizable: false,
+            title: ClipboardCommon.CLIPBOARD,
+            resizable: false,
             center: true,
             show: false,
-            // frame: false,
+            frame: false,
             // transparent: true,
             width: 600,
             height: 450,
-            // autoHideMenuBar: true,
-            // titleBarStyle: 'hidden',
+            autoHideMenuBar: true,
+            titleBarStyle: 'hidden',
             icon: path.join(__dirname, 'clipboard.png'),
             webPreferences: {
                 preload: path.join(this.assetsPath, 'javascript/preload.js'),

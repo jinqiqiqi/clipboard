@@ -20,6 +20,18 @@ class AppMenu {
     getTemplate(platform) {
         const mainWndow = this.clipboardWindowClass;
         const menuTemplate = [{
+                label: Common.CLIPBOARD,
+                submenu: [{
+                    label: Common.MENU.version,
+                }, {
+                    label: Common.MENU.quit,
+                    accelerator: 'CommandOrControl+Q',
+                    click: () => {
+                        app.quit();
+                    }
+                }]
+            },
+            {
                 label: Common.MENU.view,
                 submenu: [{
                         label: Common.MENU.reload,
@@ -32,22 +44,13 @@ class AppMenu {
                         role: 'toggleDevTools',
                     },
                 ],
-            },
-            {
-                label: Common.MENU.version,
-                submenu: [{
-                    label: 'sendFromMaster',
-                    accelerator: 'CommandOrControl+F',
-                    click: () => {
-                        mainWndow.clipboardWindow.webContents.send('clipping:init-list', 'I am calling from menu item');
-                    }
-                }]
             }
+
         ];
 
         if (platform == 'darwin') {
             menuTemplate.unshift({
-                label: Common.ELECTRON_CLIPBOARD,
+                label: Common.CLIPBOARD,
                 submenu: [{
                         label: Common.MENU.version
                     },
