@@ -1,6 +1,6 @@
 {
     "name": "clipboard",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "This application will help you collect text or image from clipboard of your system.",
     "email": "jinqiqiqi@gmail.com",
     "main": "./app/main.js",

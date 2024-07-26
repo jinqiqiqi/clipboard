@@ -119,6 +119,9 @@ class ElectronClipboard {
 
         ipcMain.handle('clipping:remove-required', (event, indexNum) => {
             this.clipboardWindowClass.clippings.splice(indexNum, 1);
+            if (this.clipboardWindowClass.clippings.length == 0) {
+                clipboard.clear();
+            }
             this.appTrayClass.createOrUpdateTrayMenu();
             this.updateOrDisplayClippingListInWindow();
         });
