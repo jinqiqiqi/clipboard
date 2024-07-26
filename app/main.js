@@ -1,10 +1,12 @@
-const { electronLocalshortcut } = require('electron-localshortcut');
+
 const {
 	app,
 	ipcMain,
 	clipboard,
 	nativeImage,
 } = require('electron');
+
+const electronLocalshortcut = require('electron-localshortcut');
 
 const ClipBoardWindow = require('./modules/clipboard');
 const AppTray = require('./modules/app_tray');
@@ -74,20 +76,21 @@ class ElectronClipboard {
 		const appTray = this.appTrayClass;
 		const clipboardWindow = this.clipboardWindowClass.clipboardWindow;
 
-
-		electronLocalshortcut.register(ClipBoardWindow, 'Alt+Shift+C', () => {
+		electronLocalshortcut.register('Alt+Shift+C', () => {
 			appTray.showContextMenu();
+			console.log("Alt+Shift+C pressed.")
 		});
 
-		electronLocalshortcut.register(ClipBoardWindow, 'Alt+Shift+V', () => {
-			clipboardWindow.toggleClipboardWindow();
+		electronLocalshortcut.register('Alt+Shift+V', () => {
+			// clipboardWindow.toggleClipboardWindow();
+			console.log(clipboardWindow);
 		});
 
-		electronLocalshortcut.register(ClipBoardWindow, 'CommandOrControl+Shift+C', () => {
+		electronLocalshortcut.register('CommandOrControl+Shift+C', () => {
 			this.createNewClipping();
 		});
 
-		electronLocalshortcut.register(ClipBoardWindow, ['Alt+Shift+I', 'Alt+Shift+F'], () => {
+		electronLocalshortcut.register('Alt+Shift+I', () => {
 			this.clipboardWindowClass.clipboardWindow.webContents.openDevTools();
 		});
 	}

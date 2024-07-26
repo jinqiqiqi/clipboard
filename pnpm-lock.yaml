@@ -7,17 +7,16 @@ settings:
 importers:
 
   .:
-    dependencies:
-      electron-localshortcut:
-        specifier: ^3.2.1
-        version: 3.2.1
     devDependencies:
       electron:
-        specifier: ^31.2.1
+        specifier: ^31.3.0
         version: 31.3.0
       electron-builder:
         specifier: ^24.13.3
         version: 24.13.3(electron-builder-squirrel-windows@24.13.3(dmg-builder@24.13.3))
+      electron-localshortcut:
+        specifier: ^3.2.1
+        version: 3.2.1
       electronmon:
         specifier: ^2.0.3
         version: 2.0.3

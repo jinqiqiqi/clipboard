@@ -104,10 +104,10 @@ class ClipBoardWindowClass {
 	}
 
 	registerLocalShortcut() {
-		globalShortcut.register('CommandOrControl+H', () => {
-			this.hide();
-			// console.log("Global shortcut C+A+H pressed.");
-		});
+		// globalShortcut.register('CommandOrControl+H', () => {
+		// 	this.hide();
+		// 	// console.log("Global shortcut C+A+H pressed.");
+		// });
 	}
 
 	unregisterLocalShortcut() {
