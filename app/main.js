@@ -47,6 +47,7 @@ class ElectronClipboard {
 			this.createClipboardWindow();
 			this.createTray();
 			this.createMenu();
+			this.registerGlobalShortcut();
 			this.updateOrDisplayClippingListInWindow();
 
 			setInterval(() => {
@@ -137,7 +138,6 @@ class ElectronClipboard {
 
 	createTray() {
 		this.appTrayClass = new AppTray(this.clipboardWindowClass, app);
-		this.registerGlobalShortcut();
 	}
 
 	createMenu() {

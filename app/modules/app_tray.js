@@ -10,6 +10,7 @@ const {
 } = require("electron");
 
 const ClipboardCommon = require('../common');
+const Common = require('../common');
 
 const assetsImagePath = path.join(__dirname, '../assets/images');
 
@@ -48,7 +49,9 @@ class AppTray {
             }
         }, {
             type: 'separator'
-        }, ...this.clipboardWindow.clippings.slice(0, 20).map(this.generateClippingMenuItem), {
+        },
+        // ...this.clipboardWindow.clippings.slice(0, 20).map(this.generateClippingMenuItem),
+        {
             type: 'separator'
         }, {
             label: 'Exit',
@@ -65,7 +68,7 @@ class AppTray {
     }
 
     displayClipboardWindow() {
-        // console.log("this.clipboardWindow.isShown: ", this.clipboardWindow.isShown)
+        Common.MSG(this.clipboardWindow.isShown, "widnow isShown")
         if (this.clipboardWindow.isShown) return;
         this.clipboardWindow.show();
     }

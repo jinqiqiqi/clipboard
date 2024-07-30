@@ -98,9 +98,30 @@ class ClipBoardWindowClass {
 	}
 
 	show() {
+		const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+		Common.MSG(width);
+		Common.MSG(height);
+
 		const { x, y } = screen.getCursorScreenPoint();
-		this.clipboardWindow.setPosition(parseInt(x - this.width / 3), parseInt(y - this.height / 3));
 		this.clipboardWindow.setSize(this.width, this.height);
+		const position = {
+			x: parseInt(x - this.width / 3),
+			y: parseInt(y - this.height / 3)
+		}
+		if (position.x < 0) {
+			position.x = 0;
+		}
+		if (position.y < 0) {
+			position.y = 0;
+		}
+		if (position.x + this.width > width) {
+			position.x = width - this.width;
+		}
+		if (position.y + this.height > height) {
+			position.y = height - this.height;
+		}
+		Common.MSG("window position: ", position);
+		this.clipboardWindow.setPosition(position.x, position.y);
 
 		this.clipboardWindow.show();
 		this.clipboardWindow.focus();
