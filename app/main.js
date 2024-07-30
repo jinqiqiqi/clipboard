@@ -30,7 +30,7 @@ class ElectronClipboard {
 
 	checkInstance() {
 		const gotTheLock = app.requestSingleInstanceLock();
-		Common.MSG("gotTheLock = ", gotTheLock)
+		// Common.MSG("gotTheLock = ", gotTheLock)
 		if (!gotTheLock) {
 			if (this.clipboardWindowClass) {
 				this.clipboardWindowClass.show();
@@ -38,6 +38,9 @@ class ElectronClipboard {
 			if (this.settingsWindowClass && this.settingsWindowClass.isShown) {
 				this.settingsWindowClass.show();
 			}
+		}
+		else {
+			console.log("instance exists. launch failed.")
 		}
 
 	}
@@ -105,6 +108,10 @@ class ElectronClipboard {
 			Common.MSG("ESC pressed.");
 		});
 
+		electronLocalshortcut.register('CommandOrControl+,', () => {
+			Common.MSG("CommandOrControl+,");
+			this.appTrayClass.triggerMenuItemClick(Common.MENU.settings);
+		});
 		Common.MSG("shortcuts registered.");
 	}
 

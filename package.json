@@ -1,26 +1,26 @@
 {
-    "name": "clipboard",
-    "version": "1.0.6",
-    "description": "This application will help you collect text or image from clipboard of your system.",
-    "email": "jinqiqiqi@gmail.com",
-    "main": "./app/main.js",
-    "scripts": {
-        "dev": "electron . --trace-warnings",
-        "build": "electron-builder",
-        "build:win": "electron-builder --windows",
-        "build:linux": "electron-builder --linux AppImage",
-        "build:macos": "electron-builder --macos",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "keywords": [],
-    "author": "jinqiqiqi",
-    "license": "MIT",
-    "devDependencies": {
-        "electron": "^31.3.0",
-        "electron-builder": "^24.13.3",
-        "electronmon": "^2.0.3"
-    },
-    "dependencies": {
-        "electron-localshortcut": "^3.2.1"
-    }
+  "name": "clipboard",
+  "version": "1.0.7",
+  "description": "This application will help you collect text or image from clipboard of your system.",
+  "email": "jinqiqiqi@gmail.com",
+  "main": "./app/main.js",
+  "scripts": {
+    "dev": "electron . --trace-warnings",
+    "build": "electron-builder",
+    "build:win": "electron-builder --windows",
+    "build:linux": "electron-builder --linux AppImage",
+    "build:macos": "electron-builder --macos",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "jinqiqiqi",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^31.3.0",
+    "electron-builder": "^24.13.3",
+    "electronmon": "^2.0.3"
+  },
+  "dependencies": {
+    "electron-localshortcut": "^3.2.1"
+  }
 }

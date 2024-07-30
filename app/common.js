@@ -17,9 +17,9 @@ Common.WINDOW_SIZE = {
     height: 600
 };
 
-Common.CLIPBOARD = 'index.html';
+Common.CLIPBOARD_PAGE = 'index.html';
 Common.MENU = {
-    about: 'About Electronic Clipboard',
+    about: 'About',
     hide: 'Hide Application',
     hideOther: 'Hide Others',
     showAll: 'Show All',
@@ -45,7 +45,8 @@ Common.MENU = {
     repo: 'GitHub Repository',
     feedback: 'Report Issue',
     checkRelease: 'Check for New Release',
-    version: `${version}`
+    version: `${version}`,
+    settings: 'Settings..'
 };
 
 Common.MSG = (msg) => {

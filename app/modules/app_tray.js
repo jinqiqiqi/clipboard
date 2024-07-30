@@ -6,7 +6,9 @@ const {
     nativeImage,
     clipboard,
     Tray,
-    ipcMain
+    ipcMain,
+    dialog,
+    MenuItem
 } = require("electron");
 
 const ClipboardCommon = require('../common');
@@ -20,13 +22,14 @@ class AppTray {
         this.clipCountNumber = 0;
         this.tray = null;
         this.app = app;
+        this.icon = nativeImage.createFromPath(path.join(assetsImagePath, 'clipboard@2x.png'));
         this.createTray();
+        this.menu = null;
+
     }
 
     createTray() {
-        let systemIconImage = 'clipboard@2x.png';
-        const icon = nativeImage.createFromPath(path.join(assetsImagePath, systemIconImage));
-        this.tray = new Tray(icon);
+        this.tray = new Tray(this.icon);
         this.tray.setToolTip(ClipboardCommon.CLIPBOARD);
         this.tray.on('click', () => this.displayClipboardWindow());
 
@@ -42,8 +45,8 @@ class AppTray {
     }
 
     createOrUpdateTrayMenu() {
-        const trayMenu = Menu.buildFromTemplate([{
-            label: 'Show Clipboard',
+        this.menu = Menu.buildFromTemplate([{
+            label: `${Common.CLIPBOARD} (${Common.MENU.version})`,
             click: () => {
                 this.displayClipboardWindow();
             }
@@ -52,19 +55,47 @@ class AppTray {
         },
         // ...this.clipboardWindow.clippings.slice(0, 20).map(this.generateClippingMenuItem),
         {
-            type: 'separator'
+            label: `${Common.MENU.settings}`,
+            accelerator: "CommandOrControl+,",
+            click: () => {
+                Common.MSG("CommandOrControl+, in menu is triggered.")
+            }
         }, {
+            label: `${Common.MENU.about}`,
+            click: () => {
+                const version = Common.MENU.version;
+                dialog.showMessageBox(null, {
+                    message: `Current version is: ${version}`,
+                    type: "info",
+                    title: "Version",
+                    icon: this.icon
+                });
+            }
+        },
+        {
+            type: 'separator'
+        },
+        {
             label: 'Exit',
             click: () => {
                 this.app.exit(0);
             }
         }]);
-        this.tray.setContextMenu(trayMenu);
-        return trayMenu;
+        this.tray.setContextMenu(this.menu);
     }
 
     refreshIcon() {
 
+    }
+
+    triggerMenuItemClick(itemLable) {
+        const menuItem = this.menu.items.find(item => item.label == itemLable);
+        if (menuItem) {
+            menuItem.click(new MenuItem({ label: itemLable }));
+        }
+        else {
+            console.log(`Menu item '${itemLable}' not found`);
+        }
     }
 
     displayClipboardWindow() {

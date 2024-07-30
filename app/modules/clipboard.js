@@ -86,7 +86,7 @@ class ClipBoardWindowClass {
 	}
 
 	connectClipboard() {
-		this.loadUrl(path.join(__dirname, '../', Common.CLIPBOARD));
+		this.loadUrl(path.join(__dirname, '../', Common.CLIPBOARD_PAGE));
 	}
 
 	toggleClipboardWindow() {

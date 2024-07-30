@@ -50,6 +50,7 @@ class AppMenu {
         ];
 
         if (platform == 'darwin') {
+            menuTemplate.shift();
             menuTemplate.unshift({
                 label: Common.CLIPBOARD,
                 submenu: [{
