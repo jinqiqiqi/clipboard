@@ -129,12 +129,12 @@ class ElectronClipboard {
     }
 
     createTray() {
-        this.appTrayClass = new AppTray(this.clipboardWindowClass);
+        this.appTrayClass = new AppTray(this.clipboardWindowClass, app);
         this.registerGlobalShortcut();
     }
 
     createMenu() {
-        const appMenu = new AppMenu(this.clipboardWindowClass);
+        const appMenu = new AppMenu(this.clipboardWindowClass, app);
         appMenu.createMenu();
     }
 

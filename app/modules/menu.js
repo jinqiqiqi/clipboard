@@ -1,12 +1,12 @@
 const {
-    Menu,
-    app
+    Menu
 } = require("electron");
 const Common = require('../common');
 class AppMenu {
-    constructor(clipboardWindowClass) {
+    constructor(clipboardWindowClass, app) {
         this.template = [];
         this.clipboardWindowClass = clipboardWindowClass;
+        this.app = app;
     }
 
     createMenu() {
@@ -18,7 +18,7 @@ class AppMenu {
     }
 
     getTemplate(platform) {
-        const mainWndow = this.clipboardWindowClass;
+        const appWindow = this.app;
         const menuTemplate = [{
                 label: Common.CLIPBOARD,
                 submenu: [{
@@ -27,7 +27,7 @@ class AppMenu {
                     label: Common.MENU.quit,
                     accelerator: 'CommandOrControl+Q',
                     click: () => {
-                        app.quit();
+                        appWindow.exit();
                     }
                 }]
             },
@@ -61,7 +61,7 @@ class AppMenu {
                         label: Common.MENU.quit,
                         accelerator: 'CommandOrControl+Q',
                         click: () => {
-                            app.exit(0)
+                            appWindow.exit(0)
                         },
                     },
                 ],

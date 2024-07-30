@@ -14,10 +14,11 @@ const ClipboardCommon = require('../common');
 const assetsImagePath = path.join(__dirname, '../assets/images');
 
 class AppTray {
-    constructor(clipboardWindow) {
+    constructor(clipboardWindow, app) {
         this.clipboardWindow = clipboardWindow;
         this.clipCountNumber = 0;
         this.tray = null;
+        this.app = app;
         this.createTray();
     }
 
@@ -52,7 +53,7 @@ class AppTray {
         }, {
             label: 'Exit',
             click: () => {
-                app.exit(0);
+                this.app.exit(0);
             }
         }]);
         this.tray.setContextMenu(trayMenu);
