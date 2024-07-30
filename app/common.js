@@ -2,12 +2,16 @@ const {
     version
 } = require("../package.json");
 class Common {
-
+    static DEBUG_MODE() {
+        if (process.env.DEBUG === "true") {
+            return true;
+        }
+        return false;
+    }
 }
 
 Common.ELECTRON = 'Electron';
 Common.CLIPBOARD = 'Clipboard';
-Common.DEBUG_MODE = true;
 Common.WINDOW_SIZE = {
     width: 800,
     height: 600
@@ -45,8 +49,7 @@ Common.MENU = {
 };
 
 Common.MSG = (msg) => {
-    console.log(Common.DEBUG_MODE)
-    if (Common.DEBUG_MODE == true) {
+    if (Common.DEBUG_MODE() == true) {
         console.log(" ==>> ", msg);
     }
 }
