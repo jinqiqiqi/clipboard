@@ -20,8 +20,8 @@ class ClipBoardWindowClass {
 		this.initWindowEvents();
 		this.initWindowWebContent();
 		this.clippings = [];
-		this.width = 450;
-		this.height = 700;
+		this.width = Common.WINDOW_SIZE.width;
+		this.height = Common.WINDOW_SIZE.height;
 	}
 
 	createWindow() {

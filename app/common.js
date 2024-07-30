@@ -13,8 +13,8 @@ class Common {
 Common.ELECTRON = 'Electron';
 Common.CLIPBOARD = 'Clipboard';
 Common.WINDOW_SIZE = {
-    width: 800,
-    height: 600
+    width: 400,
+    height: 720
 };
 
 Common.CLIPBOARD_PAGE = 'index.html';

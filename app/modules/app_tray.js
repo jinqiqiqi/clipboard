@@ -77,6 +77,7 @@ class AppTray {
         },
         {
             label: 'Exit',
+            accelerator: "CommandOrControl+Q",
             click: () => {
                 this.app.exit(0);
             }
