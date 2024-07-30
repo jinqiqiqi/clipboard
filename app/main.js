@@ -77,7 +77,7 @@ class ElectronClipboard {
 
 	registerGlobalShortcut() {
 		const appTray = this.appTrayClass;
-		const clipboardWindow = this.clipboardWindowClass.clipboardWindow;
+		const clipboardWindow = this.clipboardWindowClass;
 
 		globalShortcut.register('Alt+Shift+C', () => {
 			appTray.showContextMenu();
@@ -95,7 +95,7 @@ class ElectronClipboard {
 		});
 
 		electronLocalshortcut.register('Alt+Shift+I', () => {
-			this.clipboardWindowClass.clipboardWindow.webContents.openDevTools();
+			clipboardWindow.clipboardWindow.webContents.openDevTools();
 			Common.MSG("Alt+Shift+I pressed.");
 		});
 

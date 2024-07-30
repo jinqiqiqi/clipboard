@@ -1,7 +1,8 @@
 const {
 	clipboard,
 	BrowserWindow,
-	globalShortcut
+	globalShortcut,
+	screen,
 } = require("electron");
 
 const path = require('node:path');
@@ -19,19 +20,20 @@ class ClipBoardWindowClass {
 		this.initWindowEvents();
 		this.initWindowWebContent();
 		this.clippings = [];
+		this.width = 450;
+		this.height = 700;
 	}
 
 	createWindow() {
+		const w = this.width, h = this.height;
 		const windowOptions = {
 			title: Common.CLIPBOARD,
-			// resizable: false,
-			center: true,
+			resizable: false,
+			// center: true,
 			show: false,
 			frame: true,
 			// transparent: true,
-			width: 800,
-			height: 600,
-			autoHideMenuBar: false,
+			// autoHideMenuBar: false,
 			// titleBarStyle: 'hidden',
 			icon: path.join(__dirname, 'clipboard.png'),
 			webPreferences: {
@@ -96,6 +98,10 @@ class ClipBoardWindowClass {
 	}
 
 	show() {
+		const { x, y } = screen.getCursorScreenPoint();
+		this.clipboardWindow.setPosition(parseInt(x - this.width / 3), parseInt(y - this.height / 3));
+		this.clipboardWindow.setSize(this.width, this.height);
+
 		this.clipboardWindow.show();
 		this.clipboardWindow.focus();
 		// this.clipboardWindow.webContents.send('show-clipboard-window');
