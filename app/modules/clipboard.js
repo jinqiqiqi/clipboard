@@ -24,13 +24,13 @@ class ClipBoardWindowClass {
 	createWindow() {
 		const windowOptions = {
 			title: Common.CLIPBOARD,
-			resizable: false,
+			// resizable: false,
 			center: true,
 			show: false,
 			frame: true,
 			// transparent: true,
-			width: 600,
-			height: 450,
+			width: 800,
+			height: 600,
 			autoHideMenuBar: false,
 			// titleBarStyle: 'hidden',
 			icon: path.join(__dirname, 'clipboard.png'),

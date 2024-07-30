@@ -29,10 +29,12 @@ h1 {
 
 ul.link {
 	display: block;
+	margin: 0px;
+	padding: 0px;
 }
 
 li {
-	width: 90%;
+	width: 100%;
 	display: block;
 	border: 0;
 	line-height: 2.4em;
@@ -41,15 +43,41 @@ li {
 	white-space: nowrap;
 	list-style: square inside url('../../assets/images/tick.png');
 	position: relative;
+	padding: 0 20px 0 40px;
+}
+
+li img.textPrefix {
+	position: absolute;
+	left: 0px;
+}
+li img.imgPrefix {
+	position: absolute;
+	left: 0px;
+	top: 45px;
+}
+
+li img.imgDelete {
+	position: absolute;
+	right: 0px;
+	top: 50px;
+}
+li.emptyList {
+	text-align: center;
+	color: #525040;
+}
+
+li img.txtDelete {
+	position: absolute;
+	right: 0px;
+	top: 5px;
 }
 
 li:hover {
-	background-color: #adadad;
+	background-color: #c0c0c0;
 }
 
 li:hover a {
-	color: #ffee00;
-	font-weight: bold;
+	color: #525040;	font-weight: bold;
 }
 
 li img {
