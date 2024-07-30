@@ -11,6 +11,7 @@ const electronLocalshortcut = require('electron-localshortcut');
 const ClipBoardWindow = require('./modules/clipboard');
 const AppTray = require('./modules/app_tray');
 const AppMenu = require('./modules/menu');
+const Common = require('./common');
 
 class ElectronClipboard {
     constructor() {
@@ -70,6 +71,7 @@ class ElectronClipboard {
 
     createClipboardWindow() {
         this.clipboardWindowClass = new ClipBoardWindow();
+        Common.MSG("ClipboardWindow created.");
     }
 
     registerGlobalShortcut() {
@@ -78,27 +80,30 @@ class ElectronClipboard {
 
         globalShortcut.register('Alt+Shift+C', () => {
             appTray.showContextMenu();
-            // console.log("Alt+Shift+C pressed.");
+            Common.MSG("Alt+Shift+C pressed.");
         });
 
         globalShortcut.register('Alt+Shift+V', () => {
             clipboardWindow.show();
-            // console.log("Alt+Shift+V pressed.");
+            Common.MSG("Alt+Shift+V pressed.");
         });
 
         electronLocalshortcut.register('CommandOrControl+Shift+C', () => {
             this.createNewClipping();
-            // console.log("CommandOrControl+Shift+C pressed.");
+            Common.MSG("CommandOrControl+Shift+C pressed.");
         });
 
         electronLocalshortcut.register('Alt+Shift+I', () => {
             this.clipboardWindowClass.clipboardWindow.webContents.openDevTools();
-            // console.log("Alt+Shift+I pressed.");
+            Common.MSG("Alt+Shift+I pressed.");
         });
 
         electronLocalshortcut.register('Escape', () => {
             clipboardWindow.hide();
+            Common.MSG("ESC pressed.");
         });
+
+        Common.MSG("shortcuts registered.");
     }
 
     initIPC() {
@@ -126,6 +131,7 @@ class ElectronClipboard {
             this.updateOrDisplayClippingListInWindow();
         });
 
+        Common.MSG("initIPC finished.");
     }
 
     createTray() {
@@ -148,7 +154,7 @@ class ElectronClipboard {
     }
 
     updateOrDisplayClippingListInWindow() {
-        // console.log(">>> updateOrDisplayClippingListInWindow()")
+        Common.MSG(">>> updateOrDisplayClippingListInWindow()")
     }
 }
 

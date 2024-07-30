@@ -1,20 +1,20 @@
 const {
     version
 } = require("../package.json");
-class ClipboardCommon {
+class Common {
 
 }
 
-ClipboardCommon.ELECTRON = 'Electron';
-ClipboardCommon.CLIPBOARD = 'Clipboard';
-ClipboardCommon.DEBUG_MODE = false;
-ClipboardCommon.WINDOW_SIZE = {
+Common.ELECTRON = 'Electron';
+Common.CLIPBOARD = 'Clipboard';
+Common.DEBUG_MODE = true;
+Common.WINDOW_SIZE = {
     width: 800,
     height: 600
 };
 
-ClipboardCommon.CLIPBOARD = 'index.html';
-ClipboardCommon.MENU = {
+Common.CLIPBOARD = 'index.html';
+Common.MENU = {
     about: 'About Electronic Clipboard',
     hide: 'Hide Application',
     hideOther: 'Hide Others',
@@ -44,12 +44,11 @@ ClipboardCommon.MENU = {
     version: `${version}`
 };
 
-ClipboardCommon.MSG = (msg, prefix) => {
-    if (!prefix) {
-        console.log(":::::::msg:::::::  => ", msg);
-    } else {
-        console.log(`:::::::(${prefix})::::::: => `, msg);
+Common.MSG = (msg) => {
+    console.log(Common.DEBUG_MODE)
+    if (Common.DEBUG_MODE == true) {
+        console.log(" ==>> ", msg);
     }
 }
 
-module.exports = ClipboardCommon;
+module.exports = Common;

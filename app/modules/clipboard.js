@@ -6,7 +6,7 @@ const {
 
 const path = require('node:path');
 
-const ClipboardCommon = require("../common");
+const Common = require("../common");
 
 class ClipBoardWindowClass {
     constructor() {
@@ -23,7 +23,7 @@ class ClipBoardWindowClass {
 
     createWindow() {
         const windowOptions = {
-            title: ClipboardCommon.CLIPBOARD,
+            title: Common.CLIPBOARD,
             resizable: false,
             center: true,
             show: false,
@@ -66,6 +66,9 @@ class ClipBoardWindowClass {
 
         this.clipboardWindow.on('ready-to-show', () => {
             this.show();
+            if (Common.DEBUG_MODE == true) {
+                this.clipboardWindow.webContents.openDevTools();
+            }
         });
     }
     initWindowWebContent() {
@@ -80,7 +83,7 @@ class ClipBoardWindowClass {
     }
 
     connectClipboard() {
-        this.loadUrl(path.join(__dirname, '../', ClipboardCommon.CLIPBOARD));
+        this.loadUrl(path.join(__dirname, '../', Common.CLIPBOARD));
     }
 
     toggleClipboardWindow() {

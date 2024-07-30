@@ -27,6 +27,7 @@ class AppMenu {
                     label: Common.MENU.quit,
                     accelerator: 'CommandOrControl+Q',
                     click: () => {
+                        Common.MSG("Quit from menu triggered.");
                         appWindow.exit();
                     }
                 }]
@@ -61,7 +62,8 @@ class AppMenu {
                         label: Common.MENU.quit,
                         accelerator: 'CommandOrControl+Q',
                         click: () => {
-                            appWindow.exit(0)
+                            appWindow.exit(0);
+                            Common.MSG("Quit from apple menu triggered.");
                         },
                     },
                 ],
