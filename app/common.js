@@ -34,9 +34,9 @@ Common.MENU = {
     settings: 'Settings..'
 };
 
-Common.MSG = (msg) => {
+Common.MSG = (...msg) => {
     if (Common.DEBUG_MODE() == true) {
-        console.log(" ==>> ", msg);
+        console.log(" ==>> ", ...msg);
     }
 }
 

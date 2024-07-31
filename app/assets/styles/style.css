@@ -1,132 +1,154 @@
 html {
-	box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 *,
 *:before,
 *:after {
-	box-sizing: inherit;
+    box-sizing: inherit;
 }
 
 body,
 input {
-	font: menu;
-	font-size: 1em;
+    font: menu;
+    font-size: 1em;
 }
 
 :root {
-	color-scheme: light dark;
+    color-scheme: light dark;
 }
 
 h1 {
-	text-align: center;
+    text-align: center;
 }
 
 .ctl-create-new-clipping,
 .ctl-clear-storage {
-	display: none;
+    display: none;
 }
 
 ul.link {
-	display: block;
-	margin: 0px;
-	padding: 0px;
+    display: block;
+    margin: 0px;
+    padding: 0px;
+}
+
+ul li.link_list_item {
+    width: 100%;
 }
 
 li {
-	width: 100%;
-	display: block;
-	border: 0;
-	line-height: 2.4em;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
-	list-style: square inside url('../../assets/images/tick.png');
-	position: relative;
-	padding: 0 20px 0 40px;
-	margin: 0 0 5px 0;
-	border-bottom: 1px solid #d3d3d3;
+    width: 100%;
+    display: block;
+    border: 0;
+    line-height: 2.4em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    list-style: square inside url('../../assets/images/tick.png');
+    position: relative;
+    padding: 0 20px 0 40px;
+    margin: 0 0 5px 0;
+    border-bottom: 1px solid #d3d3d3;
+}
+
+.hidden {
+    /* display: none; */
+}
+
+.show {
+    /* display: block; */
 }
 
 li img.textPrefix {
-	position: absolute;
-	left: 0px;
+    position: absolute;
+    left: 0px;
+    opacity: 0.3;
 }
+
 li img.imgPrefix {
-	position: absolute;
-	left: 0px;
-	top: 45px;
+    position: absolute;
+    left: 0px;
+    top: 45px;
+    opacity: 0.3;
 }
 
 li img.imgDelete {
-	position: absolute;
-	right: 0px;
-	top: 50px;
+    right: 0px;
+    top: 0px;
 }
+
+li button.imgDeleteButton {
+    position: absolute;
+    right: -9px;
+    top: 50px;
+}
+
 li.emptyList {
-	text-align: center;
-	color: #525040;
+    text-align: center;
+    color: #525040;
 }
 
 li img.txtDelete {
-	position: absolute;
-	right: 0px;
-	top: 5px;
+    position: absolute;
+    right: 0px;
+    top: 5px;
 }
 
 li:hover {
-	background-color: #d1d1d1;
+    background-color: #d1d1d1;
 }
 
 li:hover a {
-	color: #000000;
+    color: #000000;
 }
 
 li img {
-	float: left;
-	line-height: 71px;
+    float: left;
+    line-height: 71px;
 }
 
 .error-message {
-	color: red;
+    color: red;
 }
 
 a,
 img {
-	-webkit-app-region: no-drag;
-	text-decoration: none;
-	color: #000000;
+    -webkit-app-region: no-drag;
+    text-decoration: none;
+    color: #000000;
 }
 
 a img {
-	margin-right: 20px;
+    margin-right: 20px;
 }
 
 button.remove_item {
-	color: yellow;
-	display: block;
-	float: right;
-	border: 0px;
-	background: transparent;
-	position: absolute;
-	right: 0px;
-	top: 0.7em;
+    float: right;
+    /* border: 0px; */
+    background: transparent;
+    position: absolute;
+    right: 0px;
+    top: 0.7em;
+    height: 30px;
+    width: 30px;
+    border: 0px solid red;
 }
 
 @media (prefers-color-scheme: dark) {
-	body {
-		background: #333;
-		color: white;
-		-webkit-app-region: drag;
-		-webkit-user-select: none;
-	}
+    body {
+        background: #333;
+        color: white;
+        -webkit-app-region: drag;
+        -webkit-user-select: none;
+    }
 }
 
 @media (prefers-color-scheme: light) {
-	body {
-		background: #ddd;
-		color: black;
-		-webkit-app-region: drag;
-		-webkit-user-select: none;
-	}
+    body {
+        background: #ddd;
+        color: black;
+        -webkit-app-region: drag;
+        -webkit-user-select: none;
+    }
 }
