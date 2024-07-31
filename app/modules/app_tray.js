@@ -23,7 +23,7 @@ class AppTray {
         this.clipCountNumber = 0;
         this.tray = null;
         this.app = app;
-        this.icon = nativeImage.createFromPath(path.join(assetsImagePath, 'clipboard@2x.png'));
+        this.icon = nativeImage.createFromPath(path.join(assetsImagePath, 'clipboard.png'));
         this.createTray();
         this.menu = null;
 
@@ -47,62 +47,72 @@ class AppTray {
 
     createOrUpdateTrayMenu() {
         this.menu = Menu.buildFromTemplate([{
-            label: `Version ${Common.MENU.version}`,
-            enabled: false
-        }, {
-            label: `${Common.MENU.window}`,
-            click: () => {
-                this.displayClipboardWindow();
+                label: `Version ${Common.MENU.version}`,
+                enabled: false
+            }, {
+                label: `${Common.MENU.window}`,
+                click: () => {
+                    this.displayClipboardWindow();
+                }
+            }, {
+                type: 'separator'
+            },
+            // ...this.clipboardWindow.clippings.slice(0, 20).map(this.generateClippingMenuItem),
+            {
+                label: `${Common.MENU.pref}`,
+                accelerator: "CommandOrControl+,",
+                click: () => {
+                    Common.MSG("CommandOrControl+, in menu is triggered.");
+                    dialog.showMessageBox(null, {
+                        message: "Pref (TODO)",
+                        type: "info",
+                        title: "Version",
+                        icon: this.icon
+                    });
+                }
+            }, {
+                label: `${Common.MENU.repo}`,
+                click: () => {
+                    Common.MSG(`${Common.MENU.checkRelease} cliked.`)
+                    shell.openExternal('https://gitea.eefocus.tech/qjin/bookmarker')
+                }
+            }, {
+                label: `${Common.MENU.checkRelease}`,
+                click: () => {
+                    Common.MSG(`${Common.MENU.checkRelease} cliked.`)
+                }
+            }, {
+                label: `${Common.MENU.about}`,
+                click: () => {
+                    const version = Common.MENU.version;
+                    dialog.showMessageBox(null, {
+                        message: `Version ${version}`,
+                        type: "info",
+                        title: `${Common.CLIPBOARD}`,
+                        icon: this.icon,
+                        defaultId: 1,
+                        buttons: ["Copy", "OK"],
+                        detail: "Copyright © 2024 jinqi"
+                    }).then((response) => {
+                        if (response.response === 0) {
+                            clipboard.writeText(version);
+                        }
+                    }).catch((err) => {
+                        console.log("err: ", err);
+                    });
+                }
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: `${Common.MENU.quit}`,
+                accelerator: "CommandOrControl+Q",
+                click: () => {
+                    this.app.exit(0);
+                }
             }
-        }, {
-            type: 'separator'
-        },
-        // ...this.clipboardWindow.clippings.slice(0, 20).map(this.generateClippingMenuItem),
-        {
-            label: `${Common.MENU.pref}`,
-            accelerator: "CommandOrControl+,",
-            click: () => {
-                Common.MSG("CommandOrControl+, in menu is triggered.");
-                dialog.showMessageBox(null, {
-                    message: "Pref (TODO)",
-                    type: "info",
-                    title: "Version",
-                    icon: this.icon
-                });
-            }
-        }, {
-            label: `${Common.MENU.repo}`,
-            click: () => {
-                Common.MSG(`${Common.MENU.checkRelease} cliked.`)
-                shell.openExternal('https://gitea.eefocus.tech/qjin/bookmarker')
-            }
-        }, {
-            label: `${Common.MENU.checkRelease}`,
-            click: () => {
-                Common.MSG(`${Common.MENU.checkRelease} cliked.`)
-            }
-        }, {
-            label: `${Common.MENU.about}`,
-            click: () => {
-                const version = Common.MENU.version;
-                dialog.showMessageBox(null, {
-                    message: `Current version is: ${version}`,
-                    type: "info",
-                    title: "Version",
-                    icon: this.icon
-                });
-            }
-        },
-        {
-            type: 'separator'
-        },
-        {
-            label: `${Common.MENU.quit}`,
-            accelerator: "CommandOrControl+Q",
-            click: () => {
-                this.app.exit(0);
-            }
-        }]);
+        ]);
         this.tray.setContextMenu(this.menu);
     }
 
@@ -114,8 +124,7 @@ class AppTray {
         const menuItem = this.menu.items.find(item => item.label == itemLable);
         if (menuItem) {
             menuItem.click(new MenuItem({ label: itemLable }));
-        }
-        else {
+        } else {
             console.log(`Menu item '${itemLable}' not found`);
         }
     }
