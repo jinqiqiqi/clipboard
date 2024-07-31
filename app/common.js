@@ -29,7 +29,7 @@ Common.MENU = {
     help: 'Help',
     repo: 'Repository',
     feedback: 'Report Issue',
-    checkRelease: 'New Release...',
+    checkRelease: 'Check for updates...',
     version: `${version}`,
     settings: 'Settings..'
 };
