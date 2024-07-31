@@ -8,7 +8,8 @@ const {
     Tray,
     ipcMain,
     dialog,
-    MenuItem
+    MenuItem,
+    shell
 } = require("electron");
 
 const ClipboardCommon = require('../common');
@@ -31,7 +32,7 @@ class AppTray {
     createTray() {
         this.tray = new Tray(this.icon);
         this.tray.setToolTip(ClipboardCommon.CLIPBOARD);
-        this.tray.on('click', () => this.displayClipboardWindow());
+        // this.tray.on('click', () => this.displayClipboardWindow());
 
         ipcMain.on('refreshIcon', () => {
             this.refreshIcon();
@@ -46,7 +47,10 @@ class AppTray {
 
     createOrUpdateTrayMenu() {
         this.menu = Menu.buildFromTemplate([{
-            label: `${Common.CLIPBOARD} (${Common.MENU.version})`,
+            label: `Version ${Common.MENU.version}`,
+            enabled: false
+        }, {
+            label: `${Common.MENU.window}`,
             click: () => {
                 this.displayClipboardWindow();
             }
@@ -55,10 +59,27 @@ class AppTray {
         },
         // ...this.clipboardWindow.clippings.slice(0, 20).map(this.generateClippingMenuItem),
         {
-            label: `${Common.MENU.settings}`,
+            label: `${Common.MENU.pref}`,
             accelerator: "CommandOrControl+,",
             click: () => {
-                Common.MSG("CommandOrControl+, in menu is triggered.")
+                Common.MSG("CommandOrControl+, in menu is triggered.");
+                dialog.showMessageBox(null, {
+                    message: "Pref (TODO)",
+                    type: "info",
+                    title: "Version",
+                    icon: this.icon
+                });
+            }
+        }, {
+            label: `${Common.MENU.repo}`,
+            click: () => {
+                Common.MSG(`${Common.MENU.checkRelease} cliked.`)
+                shell.openExternal('https://gitea.eefocus.tech/qjin/bookmarker')
+            }
+        }, {
+            label: `${Common.MENU.checkRelease}`,
+            click: () => {
+                Common.MSG(`${Common.MENU.checkRelease} cliked.`)
             }
         }, {
             label: `${Common.MENU.about}`,
@@ -76,7 +97,7 @@ class AppTray {
             type: 'separator'
         },
         {
-            label: 'Exit',
+            label: `${Common.MENU.quit}`,
             accelerator: "CommandOrControl+Q",
             click: () => {
                 this.app.exit(0);

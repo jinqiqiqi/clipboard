@@ -44,6 +44,8 @@ li {
 	list-style: square inside url('../../assets/images/tick.png');
 	position: relative;
 	padding: 0 20px 0 40px;
+	margin: 0 0 5px 0;
+	border-bottom: 1px solid #d3d3d3;
 }
 
 li img.textPrefix {
@@ -73,11 +75,11 @@ li img.txtDelete {
 }
 
 li:hover {
-	background-color: #c0c0c0;
+	background-color: #d1d1d1;
 }
 
 li:hover a {
-	color: #525040;	font-weight: bold;
+	color: #000000;
 }
 
 li img {
@@ -94,7 +96,6 @@ img {
 	-webkit-app-region: no-drag;
 	text-decoration: none;
 	color: #000000;
-	font-weight: bold;
 }
 
 a img {

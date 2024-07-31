@@ -110,8 +110,14 @@ class ElectronClipboard {
 
 		electronLocalshortcut.register('CommandOrControl+,', () => {
 			Common.MSG("CommandOrControl+,");
-			this.appTrayClass.triggerMenuItemClick(Common.MENU.settings);
+			this.appTrayClass.triggerMenuItemClick(Common.MENU.pref);
 		});
+
+		electronLocalshortcut.register('CommandOrControl+H', () => {
+			Common.MSG("CommandOrControl+H");
+			clipboardWindow.hide();
+		});
+
 		Common.MSG("shortcuts registered.");
 	}
 
