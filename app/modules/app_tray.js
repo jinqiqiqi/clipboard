@@ -23,7 +23,8 @@ class AppTray {
         this.clipCountNumber = 0;
         this.tray = null;
         this.app = app;
-        this.icon = nativeImage.createFromPath(path.join(assetsImagePath, 'clipboard.png'));
+        this.icon = nativeImage.createFromPath(path.join(assetsImagePath, 'clipboard@2x.png'));
+        this.infoIcon = nativeImage.createFromPath(path.join(assetsImagePath, 'clipboard.png'));
         this.createTray();
         this.menu = null;
 
@@ -89,7 +90,7 @@ class AppTray {
                         message: `Version ${version}`,
                         type: "info",
                         title: `${Common.CLIPBOARD}`,
-                        icon: this.icon,
+                        icon: this.infoIcon,
                         defaultId: 1,
                         buttons: ["Copy", "OK"],
                         detail: "Copyright © 2024 jinqi"
