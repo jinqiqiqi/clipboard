@@ -19,13 +19,11 @@ class ElectronClipboard {
         this.appTrayClass = null;
         this.clipboardWindowClass = null;
         this.settingsWindowClass = null;
-    }
 
-    init() {
         if (!this.checkInstance()) {
             this.initApp();
         } else {
-            app.quit();
+            app.quit(0);
         }
     }
 
@@ -41,9 +39,8 @@ class ElectronClipboard {
             if (this.settingsWindowClass && this.settingsWindowClass.isShown) {
                 this.settingsWindowClass.show();
             }
-            console.log("instance exists. launch failed.")
+            console.log("instance exists. launch failed.");
         }
-
     }
 
     initApp() {
@@ -52,8 +49,6 @@ class ElectronClipboard {
             this.createTray();
             this.createMenu();
             this.registerGlobalShortcut();
-            this.updateOrDisplayClippingListInWindow();
-
         });
 
         app.on('activate', () => {
@@ -66,15 +61,12 @@ class ElectronClipboard {
 
         app.whenReady().then(() => {
             this.initIPC();
-
             try {
                 setInterval(() => {
                     this.clipboardWindowClass.clipboardWindow.webContents.send('clipping:init-list');
-
                 }, 750);
             } catch {}
         });
-
     }
 
     createClipboardWindow() {
@@ -129,7 +121,7 @@ class ElectronClipboard {
             return this.createNewClipping();
         });
         ipcMain.handle('clipping:select-required', (event, clipping) => {
-            const isImageFromClipping = clipping.includes('data:image');
+            const isImageFromClipping = clipping.startsWith('data:image');
             if (isImageFromClipping) {
                 clipboard.writeImage(nativeImage.createFromDataURL(clipping));
             } else {
@@ -137,6 +129,15 @@ class ElectronClipboard {
             }
             this.clipboardWindowClass.clipboardWindow.hide();
         });
+
+        ipcMain.handle('clipping:remove-required', (event, clipping) => {
+            Common.MSG("clipping to delete: ", clipping);
+            const currentClipboardContent = this.clipboardWindowClass.readClipboardContent();
+            if (currentClipboardContent == clipping || !clipping) {
+                clipboard.clear();
+            }
+        });
+
 
         Common.MSG("initIPC finished.");
     }
@@ -152,18 +153,10 @@ class ElectronClipboard {
 
     createNewClipping() {
         const clippingAdded = this.clipboardWindowClass.createNewClipping();
-        if (clippingAdded) {
-            this.appTrayClass.createOrUpdateTrayMenu();
-            this.updateOrDisplayClippingListInWindow();
-            Common.MSG("clippingAdded: ", clippingAdded)
-        }
         return clippingAdded;
     }
 
-    updateOrDisplayClippingListInWindow() {
-        Common.MSG(">>> updateOrDisplayClippingListInWindow()")
-    }
 }
 
 
-new ElectronClipboard().init();
+new ElectronClipboard();

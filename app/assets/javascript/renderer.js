@@ -1,6 +1,8 @@
 const clippingsKey = 'clippings';
 const clipboardContentList = document.querySelector('.clipboard-content-list');
 
+let isDeleting = false;
+
 // init events to select or remove clipping
 clipboardContentList.addEventListener('click', async(event) => {
     event.preventDefault();
@@ -10,18 +12,21 @@ clipboardContentList.addEventListener('click', async(event) => {
         await window.clipboardAPI.selectRequiredClipping(clipping);
     } else {
         indexNum = event.target.parentNode.getAttribute('ref');
-        removeClipping(indexNum);
+        await window.clipboardAPI.removeSelectedClipping(removeClipping(indexNum));
         renderClippingList(loadClippings());
     }
 });
 
 async function initOrUpdateClippingList() {
+    if (isDeleting) {
+        return;
+    }
     let storedClippings = loadClippings();
     const clipping = await window.clipboardAPI.createNewClipping();
     if (clipping != null && !storedClippings.includes(clipping)) {
         storedClippings.unshift(clipping);
-        console.log("storedClippings -> ", storedClippings);
-        console.log("clipping = ", clipping);
+        // console.log("storedClippings -> ", storedClippings);
+        // console.log("clipping = ", clipping);
         renderClippingList(storedClippings);
         writeClippings(storedClippings)
     }
@@ -42,9 +47,13 @@ function writeClippings(clippings) {
 }
 
 function removeClipping(indexNum) {
+    isDeleting = true;
     const clippings = loadClippings();
+    const clippingValue = clippings[indexNum];
     clippings.splice(indexNum, 1);
     writeClippings(clippings);
+    isDeleting = false;
+    return clippingValue;
 }
 
 function renderClippingList(clippings) {
@@ -58,18 +67,28 @@ function renderClippingList(clippings) {
 }
 
 const convertToElement = (clipping, index) => {
-    const isImageFromClipping = clipping.includes('data:image');
+    const liContent = [];
+    const isImageFromClipping = clipping.startsWith('data:image');
     clipping = clipping.replace(/>/, "&gt;").replace(/</, '&lt;');
     const currentClipping = {
         content: "",
+        imgClass: "textPrefix",
+        btClass: "",
+        deleteClass: "txtDelete",
         icon: "assets/images/text.png"
     };
-    currentClipping.content = `<a href="#${index}" ref="${index}"><textarea style="display:none" id="itemValue_${index}">${clipping}</textarea><img class="textPrefix" src="${currentClipping.icon}" ref="${index}" height="32" />${clipping}</a><button ref="${index}" class="remove_item"><img height="16" id="crs_${index}" class="txtDelete hidden" src="./assets/images/cross.png"></button>`;
+    liContent.push(`<a href="#${index}" ref="${index}"><textarea style="display:none" id="itemValue_${index}">${clipping}</textarea>`);
+    currentClipping.content = `${clipping}`;
     if (isImageFromClipping) {
         currentClipping.icon = "assets/images/img.png";
-        currentClipping.content = `<a href="#${index}" ref="${index}"><textarea style="display:none" id="itemValue_${index}">${clipping}</textarea><img class="imgPrefix" src="${currentClipping.icon}" ref="${index}" height="32" /> <img class="ImageClipItem" src="${clipping}" ref="${index}" height="128" /></a><button ref="${index}" class="remove_item imgDeleteButton"><img class="imgDelete hidden" id="crs_${index}" height="16" src="./assets/images/cross.png"></button>`
+        currentClipping.imgClass = "imgPrefix";
+        currentClipping.btClass = "imgDeleteButton";
+        currentClipping.deleteClass = "imgDelete";
+        currentClipping.content = `<img class="ImageClipItem" src="${clipping}" ref="${index}" height="128" /> `
     }
-    return `<li class="link_list_item" ref="${index}">${currentClipping.content}</li>`;
+    liContent.push(`<img class="${currentClipping.imgClass}" src="${currentClipping.icon}" ref="${index}" height="32" />${currentClipping.content}</a><button ref="${index}" class="remove_item ${currentClipping.btClass}"><img height="16" id="crs_${index}" class="${currentClipping.deleteClass} hidden" src="./assets/images/cross.png"></button> `);
+    const content = liContent.join("\n");
+    return `<li class="link_list_item" ref="${index}">${content}</li>`;
 }
 
 

@@ -20,7 +20,6 @@ class ClipBoardWindowClass {
         this.initClipboardWindowShortcut();
         this.initWindowEvents();
         this.initWindowWebContent();
-        this.clippings = [];
         this.width = Common.WINDOW_SIZE.width;
         this.height = Common.WINDOW_SIZE.height;
     }
@@ -35,7 +34,7 @@ class ClipBoardWindowClass {
             show: false,
             frame: true,
             // transparent: true,
-            // autoHideMenuBar: false,
+            autoHideMenuBar: true,
             // titleBarStyle: 'hidden',
             icon: path.join(__dirname, 'clipboard.png'),
             webPreferences: {
@@ -80,9 +79,8 @@ class ClipBoardWindowClass {
         this.connectClipboard();
         this.clipboardWindow.webContents.on('dom-ready', () => {
             // this.clipboardWindow.webContents.insertCSS(CSSInjector.commCSS);
-            // this.clipboardWindow.webContents.send('clipping:init-list', "init");
             // this.clipboardWindow.webContents.executeJavaScript(`initClippingList();`);
-            this.clipboardWindow.webContents.send('clipping:init-list', 'I am calling from menu item');
+            this.clipboardWindow.webContents.send('clipping:init-list');
             // console.log("dom-ready()");
         });
     }
@@ -148,25 +146,22 @@ class ClipBoardWindowClass {
     }
 
     createNewClipping() {
+        const clipping = this.readClipboardContent();
+        if (clipping.length < 1 || clipping == "data:image/png;base64,") {
+            return null;
+        }
+        return clipping;
+    }
+
+    readClipboardContent() {
+        let clipping;
         const clipboardFormats = clipboard.availableFormats();
         const isImageClipping = clipboardFormats.some(item => item.includes('image'));
-        let clipping;
         if (isImageClipping) {
             clipping = clipboard.readImage().toDataURL();
         } else {
             clipping = clipboard.readText().trim();
         }
-        if (clipping.length < 1 || this.clippings.includes(clipping) || clipping == "data:image/png;base64,") {
-            // console.log(" ====>>>> Existing in clippings: ", clipping);
-            return null;
-        }
-        // else {
-        // 	console.log(" ====>>>> new added clipping: ", clipping);
-        // }
-        this.clippings.unshift(clipping);
-        // this.clipboardWindow.webContents.executeJavaScript(`initClippingList();`);
-        // this.clipboardWindow.webContents.send('clipping:init-list', "creating");
-        this.clipboardWindow.webContents.send('clipping:init-list', 'I am calling from menu item');
         return clipping;
     }
 }

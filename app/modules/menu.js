@@ -20,32 +20,32 @@ class AppMenu {
     getTemplate(platform) {
         const appWindow = this.app;
         const menuTemplate = [{
-            label: Common.CLIPBOARD,
-            submenu: [{
-                label: Common.MENU.version,
-            }, {
-                label: Common.MENU.quit,
-                accelerator: 'CommandOrControl+Q',
-                click: () => {
-                    Common.MSG("Quit from menu triggered.");
-                    appWindow.exit();
-                }
-            }]
-        },
-        {
-            label: Common.MENU.view,
-            submenu: [{
-                label: Common.MENU.reload,
-                accelerator: 'CommandOrControl+R',
-                role: 'reload',
+                label: Common.CLIPBOARD,
+                submenu: [{
+                    label: Common.MENU.version,
+                }, {
+                    label: Common.MENU.quit,
+                    accelerator: 'CommandOrControl+Q',
+                    click: () => {
+                        Common.MSG("Quit from menu triggered.");
+                        appWindow.exit();
+                    }
+                }]
             },
             {
-                label: Common.MENU.devtool,
-                accelerator: 'Alt+CommandOrControl+I',
-                role: 'toggleDevTools',
-            },
-            ],
-        }
+                label: Common.MENU.view,
+                submenu: [{
+                        label: Common.MENU.reload,
+                        accelerator: 'CommandOrControl+R',
+                        role: 'reload',
+                    },
+                    {
+                        label: Common.MENU.devtool,
+                        accelerator: 'Alt+CommandOrControl+I',
+                        role: 'toggleDevTools',
+                    },
+                ],
+            }
 
         ];
 
@@ -54,19 +54,19 @@ class AppMenu {
             menuTemplate.unshift({
                 label: Common.CLIPBOARD,
                 submenu: [{
-                    label: Common.MENU.version
-                },
-                {
-                    type: 'separator',
-                },
-                {
-                    label: Common.MENU.quit,
-                    accelerator: 'CommandOrControl+Q',
-                    click: () => {
-                        appWindow.exit(0);
-                        Common.MSG("Quit from apple menu triggered.");
+                        label: Common.MENU.version
                     },
-                },
+                    {
+                        type: 'separator',
+                    },
+                    {
+                        label: Common.MENU.quit,
+                        accelerator: 'CommandOrControl+Q',
+                        click: () => {
+                            appWindow.exit(0);
+                            Common.MSG("Quit from apple menu triggered.");
+                        },
+                    },
                 ],
             });
         }
