@@ -3,6 +3,7 @@ const {
     BrowserWindow,
     globalShortcut,
     screen,
+    dialog
 } = require("electron");
 
 const path = require('node:path');
@@ -157,7 +158,7 @@ class ClipBoardWindowClass {
         }
         if (clipping.length < 1 || this.clippings.includes(clipping) || clipping == "data:image/png;base64,") {
             // console.log(" ====>>>> Existing in clippings: ", clipping);
-            return false;
+            return null;
         }
         // else {
         // 	console.log(" ====>>>> new added clipping: ", clipping);

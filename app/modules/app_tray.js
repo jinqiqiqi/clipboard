@@ -12,7 +12,6 @@ const {
     shell
 } = require("electron");
 
-const ClipboardCommon = require('../common');
 const Common = require('../common');
 
 const assetsImagePath = path.join(__dirname, '../assets/images');
@@ -27,12 +26,11 @@ class AppTray {
         this.infoIcon = nativeImage.createFromPath(path.join(assetsImagePath, 'clipboard.png'));
         this.createTray();
         this.menu = null;
-
     }
 
     createTray() {
         this.tray = new Tray(this.icon);
-        this.tray.setToolTip(ClipboardCommon.CLIPBOARD);
+        this.tray.setToolTip(Common.CLIPBOARD);
         // this.tray.on('click', () => this.displayClipboardWindow());
 
         ipcMain.on('refreshIcon', () => {

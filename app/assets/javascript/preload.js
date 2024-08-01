@@ -13,9 +13,10 @@ contextBridge.exposeInMainWorld('clipboardAPI', {
     removeSelectedClipping: (clipping) => {
         ipcRenderer.invoke('clipping:remove-required', clipping);
     },
-    initClippingData: async(callback) => {
-        ipcRenderer.on('clipping:init-list', async(event, value) => {
+    initClippingData: async (callback) => {
+        ipcRenderer.on('clipping:init-list', async (event, value) => {
             callback();
         });
+        return "chinese;";
     }
 });

@@ -4,8 +4,7 @@ const errorMessage = document.querySelector('.error-message');
 const clearStorageButton = document.querySelector('.clear-storage');
 
 
-
-createNewClipping.addEventListener('click', async() => {
+createNewClipping.addEventListener('click', async () => {
     await initClippingList();
 });
 
@@ -13,7 +12,7 @@ clearStorageButton.addEventListener('click', () => {
     clipboardContentList.innerHTML = '';
 });
 
-clipboardContentList.addEventListener('click', async(event) => {
+clipboardContentList.addEventListener('click', async (event) => {
     event.preventDefault();
     let indexNum = event.target.getAttribute("ref");
     if (indexNum != null) {
@@ -26,14 +25,24 @@ clipboardContentList.addEventListener('click', async(event) => {
 });
 
 async function initClippingList() {
-    const clippings = await window.clipboardAPI.createNewClipping();
+    const clipping = await window.clipboardAPI.createNewClipping();
+    console.log("clipping = ", clipping)
+
+    let storedClippings = JSON.parse(localStorage.getItem('clippings'));
+    console.log("storedClippings -> ", storedClippings)
+
+    if (!storedClippings || storedClippings.length == 0 || !storedClippings.includes(clipping)) {
+        storedClippings.unshift(clipping);
+    }
     let linkElements;
-    if (clippings.length > 0) {
-        linkElements = clippings.map(convertToElement).join('')
+    if (storedClippings.length > 0) {
+        linkElements = storedClippings.map(convertToElement).join('')
     } else {
         linkElements = "<li class=\"emptyList\">Empty</li>";
     }
     clipboardContentList.innerHTML = `<ul class="link">${linkElements}</ul>`;
+
+    localStorage.setItem('clippings', JSON.stringify(storedClippings));
 }
 
 const convertToElement = (clipping, index) => {
