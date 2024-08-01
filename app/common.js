@@ -26,12 +26,13 @@ Common.MENU = {
     devtool: 'Toggle DevTools',
     window: 'Show Window',
     close: 'Close',
+    view: 'View',
     help: 'Help',
     repo: 'Repository',
     feedback: 'Report Issue',
     checkRelease: 'Check for updates...',
     version: `${version}`,
-    settings: 'Settings..'
+    settings: 'Settings...'
 };
 
 Common.MSG = (...msg) => {
