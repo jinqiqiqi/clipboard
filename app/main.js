@@ -66,10 +66,13 @@ class ElectronClipboard {
 
         app.whenReady().then(() => {
             this.initIPC();
-            setInterval(() => {
-                this.clipboardWindowClass.clipboardWindow.webContents.send('clipping:init-list');
 
-            }, 750);
+            try {
+                setInterval(() => {
+                    this.clipboardWindowClass.clipboardWindow.webContents.send('clipping:init-list');
+
+                }, 750);
+            } catch {}
         });
 
     }
